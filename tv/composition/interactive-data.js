@@ -234,6 +234,60 @@ const detailTitle = detailPanel.querySelector("h3");
 const detailText = detailPanel.querySelector("p");
 const detailSource = detailPanel.querySelector("a");
 let lockedCard = null;
+let activeSectorPoint = null;
+const sectorTooltip = document.querySelector("#sector-tooltip");
+
+function sectorPointLabel(point) {
+  const raw = point.querySelector("title")?.textContent || point.getAttribute("aria-label") || "";
+  if (document.documentElement.lang !== "az") return raw;
+  return raw.replace("Русский сектор", "Rus bölməsi")
+    .replace("Азербайджанский сектор", "Azərbaycan bölməsi")
+    .replace("медиана", "median");
+}
+
+function showSectorTooltip(point, event) {
+  if (!sectorTooltip || !point) return;
+  activeSectorPoint = point;
+  sectorTooltip.textContent = sectorPointLabel(point);
+  sectorTooltip.classList.add("is-visible");
+  const frame = point.closest(".sector-visual");
+  if (!frame) return;
+  const bounds = frame.getBoundingClientRect();
+  const pointBounds = point.getBoundingClientRect();
+  const x = event?.clientX ?? (pointBounds.left + pointBounds.width / 2);
+  const y = event?.clientY ?? (pointBounds.top + pointBounds.height / 2);
+  const left = Math.max(8, Math.min(bounds.width - sectorTooltip.offsetWidth - 8, x - bounds.left + 14));
+  let top = y - bounds.top - sectorTooltip.offsetHeight - 12;
+  if (top < 8) top = Math.min(bounds.height - sectorTooltip.offsetHeight - 8, y - bounds.top + 14);
+  sectorTooltip.style.left = `${left}px`;
+  sectorTooltip.style.top = `${Math.max(8, top)}px`;
+}
+
+function hideSectorTooltip(point) {
+  if (point && activeSectorPoint !== point) return;
+  activeSectorPoint = null;
+  sectorTooltip?.classList.remove("is-visible");
+}
+
+document.addEventListener("pointerover", (event) => {
+  const point = event.target instanceof Element ? event.target.closest(".sector-point") : null;
+  if (point) showSectorTooltip(point, event);
+});
+document.addEventListener("pointermove", (event) => {
+  if (activeSectorPoint && activeSectorPoint.matches(":hover")) showSectorTooltip(activeSectorPoint, event);
+});
+document.addEventListener("pointerout", (event) => {
+  const point = event.target instanceof Element ? event.target.closest(".sector-point") : null;
+  if (point && !point.contains(event.relatedTarget)) hideSectorTooltip(point);
+});
+document.addEventListener("focusin", (event) => {
+  const point = event.target instanceof Element ? event.target.closest(".sector-point") : null;
+  if (point) showSectorTooltip(point);
+});
+document.addEventListener("focusout", (event) => {
+  const point = event.target instanceof Element ? event.target.closest(".sector-point") : null;
+  if (point && !point.contains(event.relatedTarget)) hideSectorTooltip(point);
+});
 
 function openDetail(element) {
   detailTitle.textContent = element.dataset.title;
@@ -256,6 +310,7 @@ function closeDetail(force = false) {
 }
 
 document.addEventListener("deck-language-change", () => {
+  if (activeSectorPoint) showSectorTooltip(activeSectorPoint);
   const card = lockedCard || document.querySelector(".interactive-card:hover");
   if (card && detailPanel.classList.contains("is-open")) openDetail(card);
 });

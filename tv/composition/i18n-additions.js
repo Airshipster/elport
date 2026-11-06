@@ -231,3 +231,32 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "2025 · Русский сектор: медиана 254,46": "2025 · Rus bölməsi: median 254,46",
   "2025 · Азербайджанский сектор: медиана 249,68": "2025 · Azərbaycan bölməsi: median 249,68"
 });
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "56": "56",
+  "39": "39",
+  "K подписчиков": "K izləyici",
+  "Результат международного онлайн IQ-теста": "Beynəlxalq onlayn IQ testinin nəticəsi",
+  "Азербайджан — 57-е место в онлайн IQ-тесте 2026 года": "Azərbaycan 2026-cı il onlayn IQ testində 57-ci yerdədir",
+  "Почему?": "Niyə?",
+  "На азербайджанском языке не хватает успешных научпоп-проектов, чтобы знания регулярно появлялись в повседневном медиапотоке.": "Azərbaycan dilində bilikləri gündəlik informasiya axınında müntəzəm göstərən uğurlu elmi-populyar layihələr azdır.",
+  "Дальше — данные об IQ-тестах, учебных результатах и информационной среде.": "Davamında IQ testləri, təhsil nəticələri və informasiya mühiti haqqında məlumatlar var.",
+  "О чём будет канал": "Kanal nədən bəhs edəcək",
+  "Наука, культура и технологии — через истории и реальные дела": "Elm, mədəniyyət və texnologiyalar — hekayələr və real işlər vasitəsilə",
+  "01 · Понять": "01 · Anlamaq",
+  "Наука и здоровье": "Elm və sağlamlıq",
+  "Открытия, устройство природы, медицина и проверка громких утверждений.": "Kəşflər, təbiətin quruluşu, tibb və geniş yayılan iddiaların yoxlanması.",
+  "02 · Увидеть": "02 · Görmək",
+  "Город и культура": "Şəhər və mədəniyyət",
+  "Архитектура, археология, наследие и то, как исследования помогают их сохранять.": "Memarlıq, arxeologiya, irs və tədqiqatların onları qorumağa necə kömək etməsi.",
+  "03 · Попробовать": "03 · Sınamaq",
+  "Технологии и профессии": "Texnologiyalar və peşələr",
+  "IT, инженерия, работа индустрий, профориентация и проекты своими руками.": "İT, mühəndislik, sənayelərin işi, peşəyönümü və öz əlinlə hazırlanan layihələr.",
+  "04 · Посмотреть": "04 · İzləmək",
+  "Истории и люди": "Hekayələr və insanlar",
+  "Документальные фильмы, новости науки и культуры, интервью, подкасты и эксперименты.": "Sənədli filmlər, elm və mədəniyyət xəbərləri, müsahibələr, podkastlar və təcrübələr.",
+  "Как читать график": "Qrafiki necə oxumalı",
+  "Каждая точка — медианный балл абитуриентов соответствующего года.": "Hər nöqtə müvafiq ilin abituriyentlərinin median balını göstərir.",
+  "Наведите на точку, чтобы увидеть точное значение.": "Dəqiq rəqəmi görmək üçün nöqtənin üzərinə gəlin.",
+  "Медиана — результат, ниже которого находится половина участников.": "Median — iştirakçıların yarısının nəticəsindən yüksək olan göstəricidir."
+});
