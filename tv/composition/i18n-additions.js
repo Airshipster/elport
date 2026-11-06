@@ -284,8 +284,8 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
 
 
 window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
-  "Видение сотрудничества": "Əməkdaşlıq baxışı",
-  "Доступная библиотека знаний, цифровое продолжение телеканала и постепенное развитие собственного кинопроизводства.": "Hər kəs üçün əlçatan bilik kitabxanası, telekanalın rəqəmsal davamı və öz kino istehsalının mərhələli inkişafı.",
+  "Что Али предлагает развивать": "Əlinin inkişaf etdirməyi təklif etdiyi istiqamətlər",
+  "Готовить выпуски сразу для эфира и YouTube/стриминга; собрать цифровую библиотеку знаний; затем запускать документальные и художественные фильмы, короткий и полный метр, сериалы и привлекать молодые команды режиссёров, сценаристов и операторов.": "Buraxılışları həm televiziya efiri, həm də YouTube/striminq üçün hazırlamaq; rəqəmsal bilik kitabxanası yaratmaq; sonra sənədli və bədii filmlər, qısametrajlı və tammetrajlı filmlər, seriallar istehsal etmək, gənc rejissor, ssenarist və operator komandalarını cəlb etmək."
   "США · коммерческий научно-познавательный и приключенческий телеканал.": "ABŞ · kommersiya elmi-idraki və macəra telekanalı.",
   "США · документальные форматы о природе, науке, истории и путешествиях.": "ABŞ · təbiət, elm, tarix və səyahət haqqında sənədli formatlar.",
   "США · телеканал о науке, инженерии и технологиях.": "ABŞ · elm, mühəndislik və texnologiya telekanalı.",
