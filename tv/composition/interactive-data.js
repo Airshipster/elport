@@ -260,18 +260,28 @@ document.addEventListener("deck-language-change", () => {
   if (card && detailPanel.classList.contains("is-open")) openDetail(card);
 });
 
-document.querySelectorAll(".interactive-card").forEach((element) => {
-  element.addEventListener("mouseenter", () => { if (!lockedCard) openDetail(element); });
-  element.addEventListener("mouseleave", () => closeDetail());
-  element.addEventListener("click", (event) => {
-    event.stopPropagation();
-    document.querySelectorAll(".interactive-card.is-selected").forEach((item) => item.classList.remove("is-selected"));
-    lockedCard = lockedCard === element ? null : element;
-    if (lockedCard) {
-      element.classList.add("is-selected");
-      openDetail(element);
-    } else closeDetail(true);
-  });
+document.addEventListener("pointerover", (event) => {
+  const element = event.target instanceof Element ? event.target.closest(".interactive-card") : null;
+  if (!element || element.contains(event.relatedTarget) || lockedCard) return;
+  openDetail(element);
+});
+
+document.addEventListener("pointerout", (event) => {
+  const element = event.target instanceof Element ? event.target.closest(".interactive-card") : null;
+  if (!element || element.contains(event.relatedTarget)) return;
+  closeDetail();
+});
+
+document.addEventListener("click", (event) => {
+  const element = event.target instanceof Element ? event.target.closest(".interactive-card") : null;
+  if (!element) return;
+  event.stopPropagation();
+  document.querySelectorAll(".interactive-card.is-selected").forEach((item) => item.classList.remove("is-selected"));
+  lockedCard = lockedCard === element ? null : element;
+  if (lockedCard) {
+    element.classList.add("is-selected");
+    openDetail(element);
+  } else closeDetail(true);
 });
 
 document.querySelector("#detail-close").addEventListener("click", () => {
