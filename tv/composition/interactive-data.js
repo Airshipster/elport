@@ -234,6 +234,7 @@ const detailTitle = detailPanel.querySelector("h3");
 const detailText = detailPanel.querySelector("p");
 const detailSource = detailPanel.querySelector("a");
 let lockedCard = null;
+let activeDetailCard = null;
 let activeSectorPoint = null;
 const sectorTooltip = document.querySelector("#sector-tooltip");
 
@@ -289,7 +290,40 @@ document.addEventListener("focusout", (event) => {
   if (point && !point.contains(event.relatedTarget)) hideSectorTooltip(point);
 });
 
+function placeDetailNear(element) {
+  const gap = 18, edge = 24;
+  const card = element.getBoundingClientRect();
+  const width = detailPanel.offsetWidth;
+  const height = detailPanel.offsetHeight;
+  const rightSpace = window.innerWidth - card.right;
+  const leftSpace = card.left;
+  let left, top;
+  if (rightSpace >= width + gap) {
+    left = card.right + gap;
+    top = card.top + (card.height - height) / 2;
+  } else if (leftSpace >= width + gap) {
+    left = card.left - width - gap;
+    top = card.top + (card.height - height) / 2;
+  } else {
+    const belowSpace = window.innerHeight - card.bottom;
+    const aboveSpace = card.top;
+    if (belowSpace >= height + gap) {
+      left = card.left + (card.width - width) / 2;
+      top = card.bottom + gap;
+    } else if (aboveSpace >= height + gap) {
+      left = card.left + (card.width - width) / 2;
+      top = card.top - height - gap;
+    } else {
+      left = rightSpace >= leftSpace ? card.right + gap : card.left - width - gap;
+      top = card.top + (card.height - height) / 2;
+    }
+  }
+  detailPanel.style.left = `${Math.max(edge, Math.min(window.innerWidth - width - edge, left))}px`;
+  detailPanel.style.top = `${Math.max(edge, Math.min(window.innerHeight - height - edge, top))}px`;
+}
+
 function openDetail(element) {
+  activeDetailCard = element;
   detailTitle.textContent = element.dataset.title;
   detailText.textContent = element.dataset.detail;
   detailSource.textContent = element.dataset.sourceLabel || "Почему это важно";
@@ -301,6 +335,7 @@ function openDetail(element) {
     detailSource.style.display = element.dataset.sourceLabel ? "inline" : "none";
   }
   detailPanel.classList.add("is-open");
+  placeDetailNear(element);
   gsap.to(detailPanel, { opacity: 1, visibility: "visible", y: 0, scale: 1, duration: .24, ease: "power2.out", overwrite: true });
 }
 
@@ -323,8 +358,16 @@ document.addEventListener("pointerover", (event) => {
 
 document.addEventListener("pointerout", (event) => {
   const element = event.target instanceof Element ? event.target.closest(".interactive-card") : null;
-  if (!element || element.contains(event.relatedTarget)) return;
+  if (!element || element.contains(event.relatedTarget) || detailPanel.contains(event.relatedTarget)) return;
   closeDetail();
+});
+
+detailPanel.addEventListener("pointerleave", () => {
+  if (!lockedCard) closeDetail();
+});
+
+window.addEventListener("resize", () => {
+  if (activeDetailCard && detailPanel.classList.contains("is-open")) placeDetailNear(activeDetailCard);
 });
 
 document.addEventListener("click", (event) => {
