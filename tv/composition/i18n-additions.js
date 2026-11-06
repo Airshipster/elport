@@ -281,3 +281,19 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "Наведите на точку, чтобы увидеть точное значение.": "Dəqiq rəqəmi görmək üçün nöqtənin üzərinə gəlin.",
   "Медиана — результат, ниже которого находится половина участников.": "Median — iştirakçıların yarısının nəticəsindən yüksək olan göstəricidir."
 });
+
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "Видение сотрудничества": "Əməkdaşlıq baxışı",
+  "Доступная библиотека знаний, цифровое продолжение телеканала и постепенное развитие собственного кинопроизводства.": "Hər kəs üçün əlçatan bilik kitabxanası, telekanalın rəqəmsal davamı və öz kino istehsalının mərhələli inkişafı.",
+  "США · коммерческий научно-познавательный и приключенческий телеканал.": "ABŞ · kommersiya elmi-idraki və macəra telekanalı.",
+  "США · документальные форматы о природе, науке, истории и путешествиях.": "ABŞ · təbiət, elm, tarix və səyahət haqqında sənədli formatlar.",
+  "США · телеканал о науке, инженерии и технологиях.": "ABŞ · elm, mühəndislik və texnologiya telekanalı.",
+  "Оговорка · Discovery": "Qeyd · Discovery",
+  "В истории канала были развлекательные сюжеты о паранормальном. Здесь он показан как пример формата, не редакционный стандарт.": "Kanalın tarixində paranormal mövzulu əyləncə proqramları olub. Burada o, redaksiya standartı kimi deyil, format nümunəsi kimi göstərilir.",
+  "Оговорка · NatGeo": "Qeyd · NatGeo",
+  "Программа «Is It Real?» разбирала необычные заявления. Здесь канал — пример документальной подачи, не оценка всего каталога.": "«Is It Real?» proqramı qeyri-adi iddiaları araşdırırdı. Burada kanal bütün kataloqun qiymətləndirilməsi deyil, sənədli təqdimat nümunəsidir.",
+  "Оговорка · Science": "Qeyd · Science",
+  "В сетке встречались передачи о необычных явлениях. Здесь канал — пример научно-познавательного формата, не эталон содержания.": "Proqram cədvəlində qeyri-adi hadisələrdən bəhs edən verilişlər olub. Burada kanal məzmun etalonu deyil, elmi-idraki format nümunəsidir.",
+  "Логотипы показывают типы вещания. 24 DOC — архивный пример российского документального канала (2005–2017), не «Доктор».": "Loqolar yayım növlərini göstərir. 24 DOC 2005–2017-ci illərdə fəaliyyət göstərmiş Rusiya sənədli kanalının arxiv nümunəsidir, «Doktor» deyil."
+});
