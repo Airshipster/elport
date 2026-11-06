@@ -210,6 +210,7 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "ELMAN AHMADBAYOV · Почему я пришёл с этим предложением": "ELMAN AHMADBAYOV · Bu təkliflə niyə çıxış edirəm",
   "Телевидение": "Televiziya",
   "Активно работал со всеми телеканалами Азербайджана": "Azərbaycanın bütün telekanalları ilə fəal çalışıb",
+  "Портрет Али Алекпера": "Əli Ələkpərin portreti",
   "Активно работает с телеканалами Азербайджана": "Azərbaycan telekanalları ilə fəal işləyir",
   "Опыт телевизионного производства и работы с командами вещателей.": "Televiziya istehsalı və yayımçı komandaları ilə iş təcrübəsi.",
   "На дальних берегах": "Uzaq sahillərdə",
