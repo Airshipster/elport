@@ -175,3 +175,17 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "Франция · общественный канал с программами о науке, природе и культуре.": "Fransa · elm, təbiət və mədəniyyət proqramları təqdim edən ictimai kanal.",
   "Франция · документальный канал о природе, технологиях, обществе и истории.": "Fransa · təbiət, texnologiya, cəmiyyət və tarix haqqında sənədli kanal."
 });
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "Режиссёр · Оператор-постановщик": "Rejissor · Quruluşçu operator",
+  "Кино, реклама и визуальное производство": "Kino, reklam və vizual istehsal",
+  "Режиссёр и оператор-постановщик": "Rejissor və quruluşçu operator",
+  "Оператор-постановщик": "Quruluşçu operator",
+  "Реклама и события": "Reklam və tədbirlər",
+  "Проекты и съёмки с AZAL, F1 Baku, Sea Breeze Dream Fest и IDDA.": "AZAL, F1 Baku, Sea Breeze Dream Fest və IDDA ilə layihələr və çəkilişlər.",
+  "Работа в креативной команде телеканала.": "Telekanalın kreativ komandasında iş.",
+  "Фильм на стадии постпродакшна: сочетание съёмок и технологий ИИ.": "Postprodakşn mərhələsində olan film: çəkilişlər və süni intellekt texnologiyalarının birləşməsi.",
+  "Подход к работе: совместное обсуждение решений и ответственность за каждое направление.": "İş yanaşması: qərarların birlikdə müzakirəsi və hər istiqamət üzrə məsuliyyət.",
+  "Библиотека знаний: выпуски, фильмы и образовательные программы по запросу.": "Bilik kitabxanası: istənilən vaxt izlənilə bilən buraxılışlar, filmlər və təhsil proqramları.",
+  "Документальные и художественные фильмы, сериалы и новые авторские команды.": "Sənədli və bədii filmlər, seriallar və yeni yaradıcı komandalar."
+});
