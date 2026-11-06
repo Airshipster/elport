@@ -1,15 +1,11 @@
 window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "Образовательные результаты": "Təhsil nəticələri",
-  "Источник: Keepface ·": "Mənbə: Keepface ·",
   "Азербайджанский научпоп сегодня": "Azərbaycanda elmi-populyar məzmun bu gün",
   "У местных авторов уже есть аудитория": "Yerli müəlliflərin artıq öz auditoriyası var",
   "Два примера того, что знания находят зрителя в социальных сетях.": "Sosial şəbəkələrdə biliklərin öz izləyicisini tapdığına iki nümunə.",
   "тыс. подписчиков": "min izləyici",
-  "Instagram · Открыть профиль ↗": "Instagram · Profilə keç ↗",
   "Следующий шаг": "Növbəti addım",
   "Объединить авторов, редакцию и производство вокруг постоянного телеканала.": "Müəllifləri, redaksiyanı və istehsalı daimi televiziya kanalı ətrafında birləşdirmək.",
-  "Keepface:": "Keepface:",
-  "· просмотрено 05.11.2026; оценки приблизительны": "· 05.11.2026 tarixində baxılıb; göstəricilər təxminidir",
   "Создавая собственные программы, мы сможем объяснять мировые открытия на азербайджанском и рассказывать о наших учёных, культуре и городах другим странам.": "Öz proqramlarımızla dünya kəşflərini Azərbaycan dilində izah edə, alimlərimizi, mədəniyyətimizi və şəhərlərimizi başqa ölkələrə tanıda bilərik.",
   "Международный опыт": "Beynəlxalq təcrübə",
   "Каналы знаний существуют в разных странах и форматах": "Bilik kanalları müxtəlif ölkələrdə və formatlarda fəaliyyət göstərir",
@@ -104,7 +100,6 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "YUSPACE и Oğuz Fərhad — два заметных автора. Нужен постоянный телеканал знаний с собственной редакцией и производством.": "YUSPACE və Oğuz Fərhad iki tanınmış müəllifdir. Öz redaksiyası və istehsalı olan daimi bilik telekanalına ehtiyac var.",
   "Проблема": "Problem",
   "Отдельных авторов недостаточно для ежедневного разнообразного эфира о знаниях.": "Ayrı-ayrı müəlliflər biliklər haqqında gündəlik, müxtəlif məzmunlu efir üçün kifayət etmir.",
-  "Источники: профили Instagram и Keepface": "Mənbələr: Instagram profilləri və Keepface",
   "Медианные баллы вступительных экзаменов различаются по секторам": "Qəbul imtahanlarında median ballar bölmələr üzrə fərqlənir",
   "Абитуриенты групп I–IV · Азербайджан · 2018–2025": "I–IV qruplar üzrə abituriyentlər · Azərbaycan · 2018–2025",
   "Русский сектор": "Rus bölməsi",
@@ -188,4 +183,51 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "Подход к работе: совместное обсуждение решений и ответственность за каждое направление.": "İş yanaşması: qərarların birlikdə müzakirəsi və hər istiqamət üzrə məsuliyyət.",
   "Библиотека знаний: выпуски, фильмы и образовательные программы по запросу.": "Bilik kitabxanası: istənilən vaxt izlənilə bilən buraxılışlar, filmlər və təhsil proqramları.",
   "Документальные и художественные фильмы, сериалы и новые авторские команды.": "Sənədli və bədii filmlər, seriallar və yeni yaradıcı komandalar."
+});
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "ELMAN AHMADBAYOV · Почему я пришёл с этим предложением": "ELMAN AHMADBAYOV · Bu təkliflə niyə çıxış edirəm",
+  "Телевидение": "Televiziya",
+  "Активно работает с телеканалами Азербайджана": "Azərbaycan telekanalları ilə fəal işləyir",
+  "Опыт телевизионного производства и работы с командами вещателей.": "Televiziya istehsalı və yayımçı komandaları ilə iş təcrübəsi.",
+  "На дальних берегах": "Uzaq sahillərdə",
+  "Режиссура; операторская работа также в фильмах «Стокгольмский синдром» (2019) и «Лишённый свободы» (2025).": "Rejissor işi; həmçinin «Stokholm sindromu» (2019) və «Azadlıqdan məhrum» (2025) filmlərində quruluşçu operator işi.",
+  "Mercedes-Benz · BMW · Rolls-Royce · Apple · Samsung · Cartier · Xiaomi · Honor · Dom Pérignon": "Mercedes-Benz · BMW · Rolls-Royce · Apple · Samsung · Cartier · Xiaomi · Honor · Dom Pérignon",
+  "Работы и съёмки для AZAL, Sea Breeze Dream Fest, фонда NARGIS, F1 Baku, IDDA и ADA University.": "AZAL, Sea Breeze Dream Fest, NARGIS Fondu, F1 Baku, IDDA və ADA University üçün layihələr və çəkilişlər.",
+  "Успешных научпоп-авторов на азербайджанском языке пока мало": "Azərbaycan dilində uğurlu elmi-populyar müəlliflər hələ azdır",
+  "Среди заметных проектов — YUSPACE и страница Oğuz Fərhad. Их работа важна, но отдельные аккаунты не заменяют постоянный эфир, разнообразие программ и редакционное производство.": "Diqqətçəkən layihələr arasında YUSPACE və Oğuz Fərhadın səhifəsi var. Onların işi vacibdir, amma ayrı-ayrı hesablar daimi efiri, proqram müxtəlifliyini və redaksiya istehsalını əvəz etmir.",
+  "Vüsal Yusifli": "Vüsal Yusifli",
+  "Проблема": "Problem",
+  "На азербайджанском языке не хватает успешных научпоп-проектов, чтобы знания регулярно появлялись в повседневном медиапотоке.": "Biliklərin gündəlik media axınında müntəzəm görünməsi üçün Azərbaycan dilində uğurlu elmi-populyar layihələr azdır.",
+  "24 DOC · архив": "24 DOC · arxiv",
+  "Россия · документальный канал 2005–2017 годов; это не канал «Доктор».": "Rusiya · 2005–2017-ci illərdə fəaliyyət göstərmiş sənədli film kanalı; «Doktor» kanalı ilə eyni deyil.",
+  "Примеры образовательных, научных и документальных вещателей; 24 DOC — исторический пример (2005–2017)": "Maarifləndirici, elmi və sənədli yayımçılardan nümunələr; 24 DOC tarixi nümunədir (2005–2017)",
+  "Южная Корея · общественный образовательный вещатель; образовательные программы и документальные фильмы для разных возрастов.": "Cənubi Koreya · müxtəlif yaş qrupları üçün təhsil proqramları və sənədli filmlər hazırlayan ictimai yayımçı.",
+  "Финляндия · тематический канал Yle о документальном кино, культуре и науке; цифровое продолжение доступно в Yle Areena.": "Finlandiya · Yle-nin sənədli kino, mədəniyyət və elmə həsr olunmuş tematik kanalı; rəqəmsal məzmun Yle Areena-da əlçatandır."
+});
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "Активно работает практически со всеми телеканалами Азербайджана": "Azərbaycanın demək olar ki, bütün telekanalları ilə fəal işləyir",
+  "Режиссёр: «На дальних берегах» (2018) · «Пожар» (2023) · «Фундаменталь» (2024)": "Rejissor: «Uzaq sahillərdə» (2018) · «Yanğın» (2023) · «Fundamental» (2024)",
+  "Оператор-постановщик: «Стокгольмский синдром» (2019), «Фундаменталь», «Пожар» и «Лишённый свободы» (2025).": "Quruluşçu operator: «Stokholm sindromu» (2019), «Fundamental», «Yanğın» və «Azadlıqdan məhrum» (2025).",
+  "OECD · PISA 2025 · 15-летние школьники Азербайджана": "OECD · PISA 2025 · Azərbaycanın 15 yaşlı məktəbliləri"
+});
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "2018 · Русский сектор: медиана 250,27": "2018 · Rus bölməsi: median 250,27",
+  "2018 · Азербайджанский сектор: медиана 213,85": "2018 · Azərbaycan bölməsi: median 213,85",
+  "2019 · Русский сектор: медиана 253,60": "2019 · Rus bölməsi: median 253,60",
+  "2019 · Азербайджанский сектор: медиана 245,44": "2019 · Azərbaycan bölməsi: median 245,44",
+  "2020 · Русский сектор: медиана 242,66": "2020 · Rus bölməsi: median 242,66",
+  "2020 · Азербайджанский сектор: медиана 230,76": "2020 · Azərbaycan bölməsi: median 230,76",
+  "2021 · Русский сектор: медиана 248,04": "2021 · Rus bölməsi: median 248,04",
+  "2021 · Азербайджанский сектор: медиана 222,46": "2021 · Azərbaycan bölməsi: median 222,46",
+  "2022 · Русский сектор: медиана 254,37": "2022 · Rus bölməsi: median 254,37",
+  "2022 · Азербайджанский сектор: медиана 227,10": "2022 · Azərbaycan bölməsi: median 227,10",
+  "2023 · Русский сектор: медиана 240,59": "2023 · Rus bölməsi: median 240,59",
+  "2023 · Азербайджанский сектор: медиана 211,56": "2023 · Azərbaycan bölməsi: median 211,56",
+  "2024 · Русский сектор: медиана 263,58": "2024 · Rus bölməsi: median 263,58",
+  "2024 · Азербайджанский сектор: медиана 232,88": "2024 · Azərbaycan bölməsi: median 232,88",
+  "2025 · Русский сектор: медиана 254,46": "2025 · Rus bölməsi: median 254,46",
+  "2025 · Азербайджанский сектор: медиана 249,68": "2025 · Azərbaycan bölməsi: median 249,68"
 });
