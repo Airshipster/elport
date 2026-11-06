@@ -96,6 +96,27 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
 });
 
 window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "59 механик из базы SciTopus и новые предложения редакции": "SciTopus bazasından 54 mexanika və redaksiyanın 5 yeni təklifi",
+  "Социальная реклама": "Sosial reklam",
+  "Короткие кампании о здоровье, безопасности и общественно важных привычках: ясное сообщение, точная аудитория и проверенный факт.": "Sağlamlıq, təhlükəsizlik və ictimai əhəmiyyətli vərdişlər haqqında qısa kampaniyalar: aydın mesaj, düzgün auditoriya və yoxlanmış fakt.",
+  "Короткий формат · редакционная проверка": "Qısa format · redaksiya yoxlaması",
+  "Техновыставка изнутри": "Texnologiya sərgisinin içindən",
+  "Выездная команда показывает устройства и разработки на CES, IFA и других выставках: демонстрации, разговоры с инженерами, что уже работает и что пока прототип.": "Səyyar komanda CES, IFA və digər sərgilərdə cihaz və yenilikləri göstərir: nümayişlər, mühəndislərlə söhbətlər, işlək məhsullar və hələ prototip olanlar.",
+  "Репортаж с международных выставок": "Beynəlxalq sərgilərdən reportaj",
+  "Как создают игры": "Oyunlar necə hazırlanır",
+  "Разобрать игру по слоям: сценарий, дизайн уровней, графика, звук, физика, программирование и тестирование.": "Oyunu mərhələlər üzrə araşdırmaq: ssenari, səviyyə dizaynı, qrafika, səs, fizika, proqramlaşdırma və sınaq.",
+  "Игровая индустрия · студийный и выездной формат": "Oyun sənayesi · studiya və səyyar format",
+  "Фестивали игр и комиксов": "Oyun və komiks festivalları",
+  "Репортажи с Comic-Con, Games Summit и подобных событий: новые проекты, разработчики, художники и сообщества игроков.": "Comic-Con, Games Summit və oxşar tədbirlərdən reportajlar: yeni layihələr, tərtibatçılar, rəssamlar və oyunçu icmaları.",
+  "Событийный репортаж · интервью": "Tədbir reportajı · müsahibələr",
+  "Контрольная закупка": "Nəzarətli alış yoxlaması",
+  "Покупаем товары и передаём образцы независимой лаборатории; услуги оцениваем по заранее заданному протоколу. Публикуем критерии, результаты и ответ компании.": "Məhsulları alıb nümunələri müstəqil laboratoriyaya göndəririk; xidmətləri əvvəlcədən müəyyən edilmiş protokolla qiymətləndiririk. Meyarları, nəticələri və şirkətin cavabını dərc edirik.",
+  "Потребительская журналистика · независимая проверка": "İstehlakçı jurnalistikası · müstəqil yoxlama",
+  "Заказы на локализацию": "Lokallaşdırma sifarişləri",
+  "Перевод и подготовка фильмов для кинотеатрального проката по заказу правообладателей и дистрибьюторов.": "Hüquq sahibləri və distribütorların sifarişi ilə filmlərin kinoteatr nümayişi üçün tərcüməsi və hazırlanması."
+});
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "Заметных научпоп-авторов на азербайджанском пока мало": "Azərbaycan dilində tanınan elmi-populyar müəlliflər hələ azdır",
   "YUSPACE и Oğuz Fərhad — два заметных автора. Нужен постоянный телеканал знаний с собственной редакцией и производством.": "YUSPACE və Oğuz Fərhad iki tanınmış müəllifdir. Öz redaksiyası və istehsalı olan daimi bilik telekanalına ehtiyac var.",
   "Проблема": "Problem",
