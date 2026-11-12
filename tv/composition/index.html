@@ -6,17 +6,15 @@
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
   <title>Bilik telekanalı — işçi versiya</title>
+  <link rel="stylesheet" href="assets/fonts/montserrat.css">
   <script src="vendor/gsap.min.js"></script>
   <style>
-    @font-face{font-family:"Segoe UI Variable";src:local("Segoe UI Variable Text"),local("Segoe UI Variable")}
-    @font-face{font-family:"Bahnschrift SemiCondensed";src:local("Bahnschrift SemiCondensed"),local("Bahnschrift")}
-    @font-face{font-family:"Arial Narrow";src:local("Arial Narrow")}
-    :root{--bg:#07110f;--panel:#10201c;--ink:#f6f1e7;--muted:#a8b8b0;--cyan:#33d7cf;--green:#82c45b;--red:#e65d51;--gold:#d8ad64;--line:rgba(246,241,231,.15);--font:"Segoe UI Variable","Segoe UI",Arial,sans-serif;--display:"Bahnschrift SemiCondensed","Arial Narrow",sans-serif}
+    :root{--bg:#07110f;--panel:#10201c;--ink:#f6f1e7;--muted:#a8b8b0;--cyan:#33d7cf;--green:#82c45b;--red:#e65d51;--gold:#d8ad64;--line:rgba(246,241,231,.15);--font:"Montserrat",Arial,sans-serif;--display:"Montserrat",Arial,sans-serif}
     *{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--font)}
     body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 84% 12%,rgba(51,215,207,.11),transparent 28%),linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:auto,64px 64px,64px 64px}
     .clip{position:absolute;inset:0}.slide{padding:74px 88px 64px;overflow:hidden;opacity:0;visibility:hidden;pointer-events:none}.slide.is-active{opacity:1;visibility:visible;pointer-events:auto}.slide:after{content:attr(data-number);position:absolute;right:88px;bottom:42px;color:var(--muted);font-size:30px;font-weight:700}
     .kicker{color:var(--cyan);text-transform:uppercase;letter-spacing:.16em;font-weight:800;font-size:30px;margin-bottom:26px}.gold{color:var(--gold)}.red{color:var(--red)}
-    h1,h2{margin:0;max-width:1640px;font-family:var(--display);font-weight:750;letter-spacing:-.045em;line-height:.99}h1{font-size:112px}h2{font-size:80px}.accent{color:var(--cyan)}
+    h1,h2{margin:0;max-width:1640px;font-family:var(--display);font-weight:750;letter-spacing:-.045em;line-height:1.03}h1{font-size:100px}h2{font-size:72px}.accent{color:var(--cyan)}
     .lede{margin-top:36px;max-width:1420px;font-size:42px;line-height:1.28;color:var(--muted)}.source{position:absolute;left:88px;bottom:42px;max-width:1400px;font-size:26px;color:#80928a}
     .grid3,.grid4{display:grid;gap:24px;margin-top:52px}.grid3{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(4,1fr)}
     .card{min-height:235px;padding:32px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));border-radius:22px}.num{font-size:72px;line-height:1;font-weight:850;color:var(--cyan);letter-spacing:-.05em}.label{margin-top:20px;font-size:32px;line-height:1.18}.small{margin-top:14px;font-size:26px;line-height:1.28;color:var(--muted)}
@@ -62,128 +60,168 @@
     .sector-subtitle{font-size:28px;color:var(--muted);margin:24px 0 0}.sector-layout{display:grid;grid-template-columns:1.55fr .75fr;gap:24px;align-items:stretch;margin-top:23px}.sector-side{display:flex;flex-direction:column;justify-content:center;gap:22px;padding:30px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.035)}.sector-side-label{font-size:24px;color:var(--gold);font-weight:800}.sector-value{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:23px;color:var(--muted)}.sector-value strong{font-size:37px;color:var(--ink);white-space:nowrap}.sector-side p{font-size:21px;line-height:1.3;color:var(--muted)}.sector-visual{position:relative;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.035);padding:20px 25px}.sector-visual svg{display:block;width:100%;height:auto;max-height:460px}.sector-legend{display:flex;gap:30px;align-items:center;font-size:24px}.sector-legend span{display:flex;align-items:center;gap:10px}.sector-legend i{width:32px;height:5px;border-radius:6px}.sector-legend i.ru{background:var(--cyan)}.sector-legend i.az{background:var(--red)}.sector-gridline{stroke:#36504a;stroke-width:1}.sector-axis{font-size:20px;fill:#a8b8b0}.sector-reform{stroke:#d8ad64;stroke-width:2;stroke-dasharray:7 7}.sector-reform-label{font-size:16px;fill:#d8ad64}.sector-line{fill:none;stroke-width:5;stroke-linejoin:round;stroke-linecap:round}.sector-line.ru-line{stroke:#33d7cf}.sector-line.az-line{stroke:#e65d51}.sector-point{cursor:help}.sector-point:hover,.sector-point:focus{r:10;outline:none}.sector-tooltip{position:absolute;z-index:5;display:none;max-width:380px;padding:13px 16px;border:1px solid rgba(51,215,207,.55);border-radius:12px;background:#081411;color:var(--ink);font-size:22px;line-height:1.2;font-weight:750;box-shadow:0 12px 36px rgba(0,0,0,.38);pointer-events:none}.sector-tooltip.is-visible{display:block}.fiction-second{margin-top:14px}.ministries{grid-template-columns:repeat(3,1fr);gap:20px;margin-top:35px}.ministry{min-height:510px;padding:27px}.ministry h3{font-size:34px;line-height:1.08}.ministry ul{font-size:25px;line-height:1.35}.ministry li{margin-bottom:16px}.funding-note{font-size:26px;line-height:1.25}
     .ali-intro{font-size:32px;line-height:1.2;color:var(--muted);margin:18px 0 0}.ali-layout{display:grid;grid-template-columns:1.6fr .9fr;gap:24px;align-items:center;margin-top:26px}.ali-grid{display:grid;grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(130px,auto));gap:14px;min-width:0}.ali-card{min-height:0;padding:18px 24px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(100deg,rgba(51,215,207,.09),rgba(255,255,255,.025));display:grid;grid-template-columns:185px 1fr;grid-template-rows:auto auto;align-content:center;column-gap:18px}.ali-label{grid-column:1;grid-row:1/3;align-self:center;font-size:19px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--gold);margin:0}.ali-work{grid-column:2;grid-row:1;font-size:25px;line-height:1.12;font-weight:760;margin:0}.ali-card p{grid-column:2;grid-row:2;font-size:21px;line-height:1.2;color:var(--muted);margin:9px 0 0}.ali-photo-placeholder{height:560px;min-width:0;border:1px dashed rgba(216,173,100,.55);border-radius:22px;background:linear-gradient(145deg,rgba(216,173,100,.07),rgba(255,255,255,.018));display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:24px;letter-spacing:.08em;text-transform:uppercase;text-align:center}
     .channel-disclaimers{position:absolute;left:88px;right:180px;bottom:58px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.channel-disclaimer{min-height:68px;padding:9px 14px;border:1px solid rgba(216,173,100,.28);border-radius:12px;background:rgba(7,17,15,.92);display:grid;grid-template-columns:155px 1fr;align-items:center;gap:10px}.channel-disclaimer b{font-size:16px;color:var(--gold);letter-spacing:.04em}.channel-disclaimer p{font-size:14px;line-height:1.12;color:var(--muted);margin:0}.channel-note{position:absolute;left:88px;bottom:20px;font-size:13px;line-height:1.1;color:var(--muted)}
+    .ali-portrait{justify-self:center;width:min(100%,420px);height:560px;margin:0;overflow:hidden;border:1px solid var(--line);border-radius:22px;background:#10201c}.ali-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+    .production-model .ministry{min-height:440px}.production-model .ministry ul{font-size:26px;line-height:1.35}.funding-card h3{margin-top:0}.growth-card h3{margin-top:12px}.growth-subtitle{font-size:26px;line-height:1.25;color:var(--muted);margin:14px 0 0}.growth-subtitle+.growth-grid{margin-top:26px}#slide-world-channels h2{font-size:58px}
   </style>
 </head>
 <body data-composition-id="root" data-start="0" data-duration="240" data-width="1920" data-height="1080">
   <script type="application/hyperframes-slideshow+json">
-  {
+{
   "slides": [
     {
       "sceneId": "s01",
-      "notes": "Рабочее название. Сразу назвать конечный продукт и совместную ведомственную рамку."
+      "notes": "Сразу назвать предложение: общедоступный телеканал о знаниях на азербайджанском языке. Это рабочая концепция, название можно поменять.",
+      "autoplay": false
     },
     {
       "sceneId": "s02",
-      "notes": "Начать с права автора говорить об этом проекте: 15 лет практики, работа с данными, авторами и контентом. Имя на слайде — Elman Ahmadbayov, как указано на личном сайте."
-    },
-    {
-      "sceneId": "s02ali",
-      "notes": "По информации Али Алекпера: он активно работал со всеми телеканалами Азербайджана. В кино он указан режиссёром и оператором-постановщиком в перечисленных работах; в рекламе и событиях показаны бренды и проекты из его биографии. Партнёрства или поддержка телеканала перечисленными брендами не подразумеваются."
+      "notes": "Начать с права автора говорить об этом проекте: 15 лет практики, работа с данными, авторами и контентом. Имя на слайде — Elman Ahmadbayov, как указано на личном сайте.",
+      "autoplay": false
     },
     {
       "sceneId": "s03",
-      "notes": "Показать, что проект начинается не с идеи на бумаге. Цифры относятся к локально проверенной базе SciTopus."
+      "notes": "Показать, что у проекта уже есть база для поиска тем, форматов и потенциальных партнёров. Не называть субтитры готовыми сценариями.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s02ali",
+      "notes": "Али Алекпер принимал участие в реструктуризации телеканалов. В кино он указан режиссёром и оператором-постановщиком в перечисленных работах; в рекламе и событиях показаны проекты из его биографии. Партнёрства или поддержка телеканала перечисленными брендами не подразумеваются.",
+      "autoplay": false
     },
     {
       "sceneId": "s04",
-      "notes": "Упомянуть внешнее влияние коротко: зависимость от чужих площадок означает зависимость и от чужой повестки. Не превращать этот фрагмент в отдельное расследование."
+      "notes": "Упомянуть внешнее влияние коротко: зависимость от чужих площадок означает зависимость и от чужой повестки. Не превращать этот фрагмент в отдельное расследование.",
+      "autoplay": false
     },
     {
       "sceneId": "s04creators",
-      "notes": "Слайд показывает малое число успешных научпоп-авторов на азербайджанском языке. Это два примера, указанные инициатором, а не полный реестр рынка. Убраны прогресс-бар и подпись «открыть профиль»; карточки не создают визуальное сравнение авторов."
+      "notes": "Слайд показывает малое число успешных научпоп-авторов на азербайджанском языке. Это два примера, указанные инициатором, а не полный реестр рынка. Убраны прогресс-бар и подпись «открыть профиль»; карточки не создают визуальное сравнение авторов.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s04why",
+      "notes": "Слайд формулирует проблему после примеров авторов: успешных научпоп-проектов на азербайджанском мало, поэтому дальше показаны образовательные результаты и состояние информационной среды.",
+      "autoplay": false
     },
     {
       "sceneId": "s05iq",
-      "notes": "Это не оценка врождённого интеллекта народов. Это рейтинг добровольных участников одного онлайн-теста. Но даже внутри этой ограниченной метрики Азербайджан занимает 57-е место и уступает нескольким соседям."
+      "notes": "Оговорить прямо: IQ-тест не измеряет «ум народа», а онлайн-выборка не репрезентативна. Но внутри одной и той же процедуры Азербайджан занимает 57-е место, ниже Грузии и Армении.",
+      "autoplay": false
     },
     {
       "sceneId": "s05",
-      "notes": "Номера перед странами — места по опубликованному среднему баллу. Армения не включена: в PISA 2025 она ниже Азербайджана по всем трём показанным направлениям."
+      "notes": "Сравнить Азербайджан с лидером и средним OECD, без отдельного акцента на Армении.",
+      "autoplay": false
     },
     {
       "sceneId": "s05b",
-      "notes": "Средние баллы скрывают главное: сколько подростков не достигают минимального уровня и сколько выходит на высокий уровень."
+      "notes": "Показать долю школьников ниже базового уровня и почти отсутствующую верхнюю группу.",
+      "autoplay": false
     },
     {
       "sceneId": "s05c",
-      "notes": "Формально ребёнок проводит в образовании 12,4 года. После поправки на реальные результаты остаётся 8,3 года обучения."
+      "notes": "12,4 года формального обучения превращаются в 8,3 года обучения с поправкой на результат.",
+      "autoplay": false
     },
     {
       "sceneId": "s05d",
-      "notes": "Неравенство результатов показывает, что среда вокруг ребёнка слишком сильно определяет итог."
-    },
-    {
-      "sceneId": "s05e",
-      "notes": "Инновационный индекс показывает разрыв между созданными условиями и фактическим результатом."
+      "notes": "Разрыв по доходу семьи и месту проживания показывает силу среды.",
+      "autoplay": false
     },
     {
       "sceneId": "s05f",
-      "notes": "Индекс образовательного капитала Всемирного банка даёт ещё одно международное сравнение. Армения и другие страны показаны обычными строками без специального акцента."
+      "notes": "Сопоставление образовательного капитала со знакомыми странами; ни одну соседнюю страну специально не выделять.",
+      "autoplay": false
     },
     {
       "sceneId": "s05sector",
-      "notes": "График показывает медианные баллы вступительных экзаменов групп I–IV по секторам за 2018–2025 годы. Наведение или фокус на каждой точке открывает год и точное значение. Источник — ежегодные отчёты DİM «Abituriyent» № 12; в 2019 году изменилась модель экзамена. В 2025 году медиана русского сектора была выше, но средний балл азербайджанского сектора оказался выше. Сам график не устанавливает причину различий."
-    },
-    {
-      "sceneId": "s06",
-      "notes": "Самостоятельная причина участия Министерства культуры: язык, герои, наследие и национальная производственная школа."
-    },
-    {
-      "sceneId": "s07",
-      "notes": "Смысловой центр инициативы. Способность самостоятельно объяснять мир — не изоляция от мировой науки."
-    },
-    {
-      "sceneId": "s07world",
-      "notes": "Логотипы показывают разные типы вещания, а не редакционный эталон. Для Discovery, National Geographic и Science Channel отдельные оговорки вынесены под галерею и оформлены одинаково; во всплывающих карточках оставлены только описания формата. 24 DOC — исторический российский документальный канал (2005–2017), не связанный с «Доктором»."
-    },
-    {
-      "sceneId": "s08",
-      "notes": "Это карта областей, но не программа канала. Следующие слайды показывают рубрики — повторяемые механики выпусков."
-    },
-    {
-      "sceneId": "s09",
-      "notes": "Общая интерактивная карта рубрик включает новости науки и культуры, мастерскую, опыты, аэропорт изнутри и трудные профессии. Каждый формат раскрывается по наведению или нажатию."
-    },
-    {
-      "sceneId": "s10",
-      "notes": "Шесть примеров раскрывают, как устроен конкретный выпуск. Каждый можно производить локально или адаптировать с разрешения автора."
-    },
-    {
-      "sceneId": "s10fiction",
-      "notes": "На конференции UK National Astronomy Meeting в 2022 году 164 из 239 респондентов добровольного опроса указали, что фантастика повлияла на их жизнь или карьеру. Это самооценка неслучайной выборки, не доказательство причинного эффекта и не статистика по всем астрономам или сотрудникам NASA. Истории NASA дополняют пример. Для показа фильмов необходимы права."
-    },
-    {
-      "sceneId": "s11",
-      "notes": "Это не утверждение о доле верящих. Это редакционная карта утверждений, на которые канал должен уметь отвечать регулярно и доказательно."
-    },
-    {
-      "sceneId": "s12",
-      "notes": "Пять маршрутов позволяют начать быстро и наращивать собственное производство. Каждый чужой материал требует прав."
-    },
-    {
-      "sceneId": "s12funding",
-      "notes": "Основа — государственное финансирование; реклама, спонсорство, заказы и собственные лицензии могут покрывать часть расходов. Научная проверка: источники, специалисты, доказательства и исправление ошибок; рекламодатель не определяет выводы."
-    },
-    {
-      "sceneId": "s12growth",
-      "notes": "Перспективные направления, не согласованный бизнес-план: доступная библиотека знаний, собственная производственная база, документальные и художественные фильмы, сериалы, работа с новыми авторами и лицензирование прав, принадлежащих телеканалу."
-    },
-    {
-      "sceneId": "s12future",
-      "notes": "Горизонт 10–15 лет относится к долгосрочным целям. Ранние показатели — охват, понимание и вовлечение; позднее — образовательные выборы, установки и профессиональные траектории. Нельзя приписывать изменения в национальной статистике одному телеканалу."
+      "notes": "График показывает медианные баллы вступительных экзаменов групп I–IV по секторам за 2018–2025 годы. Наведение или фокус на каждой точке открывает год и точное значение. Источник — ежегодные отчёты DİM «Abituriyent» № 12; в 2019 году изменилась модель экзамена. В 2025 году медиана русского сектора была выше, но средний балл азербайджанского сектора оказался выше. Сам график не устанавливает причину различий.",
+      "autoplay": false
     },
     {
       "sceneId": "s13",
-      "notes": "Предлагаемые роли: образование и наука, культура, цифровое развитие и транспорт. Канал может регулярно показывать реальные исследования, инженерные проекты и технологические достижения Азербайджана. Согласие ведомств не подразумевается."
+      "notes": "Предлагаемые роли: образование и наука, культура, цифровое развитие и транспорт. Канал может регулярно показывать реальные исследования, инженерные проекты и технологические достижения Азербайджана. Согласие ведомств не подразумевается.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s06",
+      "notes": "Язык, местные герои, наследие, документалистика и медиапрофессии — общие направления работы участвующих министерств.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s07",
+      "notes": "Главная мысль проекта: современный мир должен регулярно объясняться на азербайджанском языке своими редакциями и авторами.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s07world",
+      "notes": "Логотипы показывают разные типы вещания, а не редакционный эталон. Для Discovery, National Geographic и Science Channel отдельные оговорки вынесены под галерею; 24 DOC — исторический российский документальный канал (2005–2017), не связанный с «Доктором».",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s07brief",
+      "notes": "Коротко обозначить редакционную территорию: наука и здоровье, город и культура, технологии и профессии, документальные истории, интервью и эксперименты. Следующий слайд раскрывает темы подробнее.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s08",
+      "notes": "Канал шире естественных наук. В него входят город, архитектура, технологии, история, профессии и проверка утверждений.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s09",
+      "notes": "Общая интерактивная карта рубрик включает новости науки и культуры, мастерскую, опыты, аэропорт изнутри и трудные профессии. Каждый формат раскрывается по наведению или нажатию.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s10",
+      "notes": "Шесть примеров показывают двигатель выпуска: что происходит на экране и почему зритель досматривает.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s10fiction",
+      "notes": "На конференции UK National Astronomy Meeting в 2022 году 164 из 239 респондентов добровольного опроса указали, что фантастика повлияла на их жизнь или карьеру. Это самооценка неслучайной выборки, не доказательство причинного эффекта и не статистика по всем астрономам или сотрудникам NASA. Истории NASA дополняют пример. Для показа фильмов необходимы права.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s11intro",
+      "notes": "Это редакционная карта утверждений, на которые канал должен отвечать. Она не утверждает, сколько жителей верит в каждый миф.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s11",
+      "notes": "Это редакционная карта утверждений, на которые канал должен отвечать. Она не утверждает, сколько жителей верит в каждый миф.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s12",
+      "notes": "Три источника наполнения эфира: лицензирование известных зарубежных фильмов и программ, адаптация и совместное производство, приглашение специалистов и оригинальные передачи. Права на каждый материал согласуются отдельно.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s12funding",
+      "notes": "Основа — государственное финансирование; реклама, спонсорство, заказы и собственные лицензии могут покрывать часть расходов. Научная проверка: источники, специалисты, доказательства и исправление ошибок; рекламодатель не определяет выводы.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s12growth",
+      "notes": "Перспективные направления, не согласованный бизнес-план: доступная библиотека знаний, собственная производственная база, документальные и художественные фильмы, сериалы, работа с новыми авторами и лицензирование прав, принадлежащих телеканалу.",
+      "autoplay": false
+    },
+    {
+      "sceneId": "s12future",
+      "notes": "Горизонт 10–15 лет относится к долгосрочным целям. Ранние показатели — охват, понимание и вовлечение; позднее — образовательные выборы, установки и профессиональные траектории. Нельзя приписывать изменения в национальной статистике одному телеканалу.",
+      "autoplay": false
     },
     {
       "sceneId": "s14",
-      "notes": "Конечная цель — телеканал. Решение сейчас — совместный мандат на проверяемый маршрут к запуску."
+      "notes": "Просим не очередное исследование. Нужно согласовать концепцию и дать совместное поручение на подготовку запуска с понятным следующим решением.",
+      "autoplay": false
     }
   ],
   "slideSequences": []
 }
-  </script>
+    </script>
 
   <section id="slide-01" class="slide clip cover" data-hold data-number="01 / 30" data-composition-id="s01" data-start="0" data-duration="8" data-label="Обложка" data-width="1920" data-height="1080">
     <div class="kicker reveal">Рабочая концепция</div>
@@ -220,13 +258,14 @@
     <p class="ali-intro reveal">От художественного кино до международных рекламных кампаний и крупных мероприятий</p>
     <div class="ali-layout">
       <div class="ali-grid">
-        <div class="ali-card reveal"><div class="ali-label">Телевидение</div><div class="ali-work">Активно работал со всеми телеканалами Азербайджана</div><p>Режиссёрская и операторская работа, телевизионные проекты и съёмочные команды.</p></div>
+        <div class="ali-card reveal"><div class="ali-label">Телевидение</div><div class="ali-work">Принимал участие в реструктуризации телеканалов</div><p>Режиссёрская и операторская работа, телевизионные проекты и съёмочные команды.</p></div>
         <div class="ali-card reveal"><div class="ali-label">Кино</div><div class="ali-work">Режиссёр: «На дальних берегах» (2018) · «Пожар» (2023) · «Фундаменталь» (2024)</div><p>Оператор-постановщик: «Стокгольмский синдром» (2019), «Фундаменталь», «Пожар» и «Лишённый свободы» (2025).</p></div>
         <div class="ali-card reveal"><div class="ali-label">Реклама и события</div><div class="ali-work">Mercedes-Benz · BMW · Rolls-Royce · Apple · Samsung · Cartier · Xiaomi · Honor · Dom Pérignon</div><p>В числе проектов — AZAL, Sea Breeze Dream Fest, фонд NARGIS и F1 Baku; также IDDA (2024–2025) и ADA University (2019).</p></div>
       </div>
-      <div class="ali-photo-placeholder reveal" aria-label="Место для портрета Али Алекпера">Портрет Али Алекпера</div>
+      <figure class="ali-portrait reveal"><img src="assets/creators/ali-alekper.jpg" alt="Портрет Али Алекпера"></figure>
     </div>
   </section>
+
   <section id="slide-04" class="slide clip" data-hold data-number="05 / 30" data-composition-id="s04" data-start="32" data-duration="8" data-label="Информационная среда" data-width="1920" data-height="1080">
     <div class="kicker reveal">Чужая площадка — чужая повестка</div>
     <h2 class="reveal">Мы получаем знания и политические объяснения из одного и того же потока</h2>
@@ -248,7 +287,6 @@
       <div class="creator reveal"><img src="assets/creators/oguzfarhad.jpg" alt=""><div class="creator-info"><div class="creator-name">Oğuz Fərhad</div><a class="creator-handle" href="https://www.instagram.com/oguzfarhad/" target="_blank" rel="noopener" aria-label="Instagram @oguzfarhad"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg><span>@oguzfarhad</span></a><div class="creator-stat">39K</div></div></div>
     </div>
   </section>
-
 
   <section id="slide-why" class="slide clip why-slide" data-hold data-number="07 / 30" data-composition-id="s04why" data-start="48" data-duration="8" data-label="Почему?" data-width="1920" data-height="1080">
     <div class="kicker reveal">Почему?</div>
@@ -360,18 +398,7 @@
     <div class="source">Всемирный банк · диагностические данные по Азербайджану</div>
   </section>
 
-  <section id="slide-10-innovation" class="slide clip" data-hold data-number="13 / 30" data-composition-id="s05e" data-start="96" data-duration="8" data-label="Инновационный индекс" data-width="1920" data-height="1080">
-    <div class="kicker reveal">Global Innovation Index 2025</div>
-    <h2 class="reveal">94-е место по инновациям. По результатам — 112-е</h2>
-    <div class="evidence-grid">
-      <div class="evidence-card reveal"><strong>94 / 139</strong><h3>общее место</h3><p>Азербайджан находится в нижней трети рейтинга инновационных систем.</p></div>
-      <div class="evidence-card gold reveal"><strong>76</strong><h3>условия для инноваций</h3><p>Инфраструктура, институты, человеческий капитал и рынок.</p></div>
-      <div class="evidence-card bad reveal"><strong>112</strong><h3>результаты инноваций</h3><p>Знания, технологии и творческие продукты превращаются в результат хуже, чем позволяют исходные условия.</p></div>
-    </div>
-    <div class="source">WIPO · Global Innovation Index 2025 · 139 экономик · доверительный интервал позиции Азербайджана: 86–103</div>
-  </section>
-
-  <section id="slide-11-human-capital" class="slide clip" data-hold data-number="14 / 30" data-composition-id="s05f" data-start="104" data-duration="8" data-label="Образовательный капитал" data-width="1920" data-height="1080">
+  <section id="slide-11-human-capital" class="slide clip" data-hold data-number="13 / 30" data-composition-id="s05f" data-start="96" data-duration="8" data-label="Образовательный капитал" data-width="1920" data-height="1080">
     <div class="kicker reveal">Human Capital Index Plus · образование · 2025</div>
     <h2 class="reveal compact-title">Азербайджан — 63-й из 166 стран по образовательному капиталу</h2>
     <div class="ranked-ladder">
@@ -396,7 +423,7 @@
     <div class="source">World Bank Human Capital Index Plus · education pillar score, 2025 · шкала 0–188 · места рассчитаны по 166 странам с данными за 2025 год</div>
   </section>
 
-<section id="slide-sector" class="slide clip" data-hold data-number="15 / 30" data-composition-id="s05sector" data-start="112" data-duration="8" data-label="Экзамены по секторам" data-width="1920" data-height="1080">
+  <section id="slide-sector" class="slide clip" data-hold data-number="14 / 30" data-composition-id="s05sector" data-start="104" data-duration="8" data-label="Экзамены по секторам" data-width="1920" data-height="1080">
     <div class="kicker reveal">Образовательные результаты</div>
     <h2 class="reveal">Медианные баллы вступительных экзаменов различаются по секторам</h2>
     <p class="sector-subtitle reveal">Абитуриенты групп I–IV · Азербайджан · 2018–2025</p>
@@ -413,8 +440,18 @@
     <div class="source">Источник: DİM, «Abituriyent» № 12 за 2018–2025 годы · <a href="https://dim.gov.az/storage/postFile/n12-2025pdf-19-06-2026-11-34-17pdf_09-07-2026_10-31-10.pdf#page=55" target="_blank" rel="noopener">2025, с. 55</a> · <a href="https://dim.gov.az/storage/postFile/n12-2024pdf_14-07-2025_17-01-25.pdf#page=55" target="_blank" rel="noopener">2024, с. 55</a> · новая модель экзамена с 2019 года</div>
   </section>
 
+  <section id="slide-13" class="slide clip" data-hold data-number="15 / 30" data-composition-id="s13" data-start="112" data-duration="8" data-label="Роли министерств" data-width="1920" data-height="1080">
+    <div class="kicker reveal">Кто за что отвечает</div>
+    <h2 class="reveal">У каждого министерства здесь есть конкретная работа</h2>
+    <div class="ministries">
+      <div class="card ministry reveal"><h3 class="accent">Министерство науки и образования</h3><ul><li>научная экспертиза и образовательные стандарты</li><li>связь со школами, университетами и кружками</li><li>профориентация и дополнительное обучение</li><li>оценка понимания и навыков</li></ul></div>
+      <div class="card ministry reveal"><h3 class="gold">Министерство культуры</h3><ul><li>азербайджанский язык современной культуры</li><li>местные герои, наследие и документалистика</li><li>развитие авторов и аудиовизуальных профессий</li><li>международный культурный обмен и адаптация</li></ul></div>
+      <div class="card ministry reveal"><h3 class="accent">Министерство цифрового развития и транспорта</h3><ul><li>технологии, инновации и цифровая инфраструктура</li><li>транспортные проекты и инженерные решения</li><li>доступ к специалистам и реальным проектам</li><li>канал как окно в развитие страны</li></ul></div>
+    </div>
+  </section>
+
   <section id="slide-06" class="slide clip" data-hold data-number="16 / 30" data-composition-id="s06" data-start="120" data-duration="8" data-label="Культурная задача" data-width="1920" data-height="1080">
-    <div class="kicker reveal gold">Задача Министерства культуры</div>
+    <div class="kicker reveal gold">Задача Министерств</div>
     <h2 class="reveal">Канал будет развивать современный азербайджанский язык и местное производство</h2>
     <div class="grid4">
       <div class="card reveal"><div class="label">Язык</div><div class="small">Новая терминология и нормальная речь о науке, технологиях и городе.</div></div>
@@ -467,8 +504,6 @@
     <div class="channel-note">Логотипы показывают типы вещания. 24 DOC — архивный пример российского документального канала (2005–2017), не «Доктор».</div>
   </section>
 
-
-
   <section id="slide-channel-overview" class="slide clip" data-hold data-number="19 / 30" data-composition-id="s07brief" data-start="144" data-duration="8" data-label="О чём будет канал" data-width="1920" data-height="1080">
     <div class="kicker reveal">О чём будет канал</div>
     <h2 class="reveal">Наука, культура и технологии — через истории и реальные дела</h2>
@@ -492,11 +527,7 @@
     <h2 class="reveal">Это не шесть программ. Это десятки повторяемых механик</h2>
     <div class="detail-hint">Наведите или нажмите на рубрику</div>
     <div id="rubric-wall" class="rubric-wall"></div>
-    <div class="source">59 механик из базы SciTopus и новые предложения редакции</div>
   </section>
-
-
-
 
   <section id="slide-10" class="slide clip" data-hold data-number="22 / 30" data-composition-id="s10" data-start="168" data-duration="8" data-label="Механика выпуска" data-width="1920" data-height="1080">
     <div class="kicker reveal">Как выглядит конкретный выпуск</div>
@@ -525,55 +556,55 @@
     <div class="source"><a href="https://arxiv.org/abs/2208.05825" target="_blank" rel="noopener">UK National Astronomy Meeting, 2022</a> · <a href="https://science.nasa.gov/universe/exoplanets/to-boldly-go-how-star-trek-inspired-nasas-planet-hunters/" target="_blank" rel="noopener">NASA: истории исследователей и Star Trek</a></div>
   </section>
 
-
-  <section id="slide-11" class="slide clip" data-hold data-number="24 / 30" data-composition-id="s11" data-start="184" data-duration="8" data-label="Мифы и псевдонаука" data-width="1920" data-height="1080">
-    <div class="kicker reveal red">Сначала — то, что чаще встречается в цифровой среде и может причинить реальный вред</div>
-    <h2 class="reveal">Мифы не заканчиваются астрологией</h2>
-    <div class="detail-hint">Наведите: тезис, проверка, источник</div>
-    <div id="myth-wall" class="myth-wall"></div>
-    <div class="source">Порядок — редакционный приоритет по повторяемости и потенциальному вреду; это не замер доли верящих в Азербайджане</div>
+  <section id="slide-myths-intro" class="slide clip why-slide" data-hold data-number="24 / 30" data-composition-id="s11intro" data-start="184" data-duration="8" data-label="Предисловие к мифам" data-width="1920" data-height="1080">
+    <div class="kicker reveal red">Что предстоит разбирать</div>
+    <h2 class="reveal">Мифы, псевдонаука и опасные заблуждения</h2>
+    <p class="lede reveal">Далее — примеры недостоверных утверждений: от астрологии и псевдолечения до теорий заговора. Канал покажет, как их проверять.</p>
   </section>
 
-  <section id="slide-12" class="slide clip" data-hold data-number="25 / 30" data-composition-id="s12" data-start="192" data-duration="8" data-label="Производственная модель" data-width="1920" data-height="1080">
+  <section id="slide-11" class="slide clip" data-hold data-number="25 / 30" data-composition-id="s11" data-start="192" data-duration="8" data-label="Мифы и псевдонаука" data-width="1920" data-height="1080">
+    <div class="kicker reveal red">Сначала — то, что чаще встречается в цифровой среде и может причинить реальный вред</div>
+    <h2 class="reveal">Мифы не заканчиваются астрологией</h2>
+    <div id="myth-wall" class="myth-wall"></div>
+    <div class="source">Наведите: тезис, проверка, источник</div>
+  </section>
+
+  <section id="slide-12" class="slide clip" data-hold data-number="26 / 30" data-composition-id="s12" data-start="200" data-duration="8" data-label="Производственная модель" data-width="1920" data-height="1080">
     <div class="kicker reveal">Как наполнить эфир</div>
     <h2 class="reveal">На старте не нужно снимать всё самим</h2>
-    <div class="flow">
-      <div class="step reveal"><b>Лицензировать</b><span>Получать права и озвучивать готовые произведения.</span></div>
-      <div class="step reveal"><b>Адаптировать</b><span>Создавать локальную версию разрешённого сценария.</span></div>
-      <div class="step reveal"><b>Создавать вместе</b><span>Совместные проекты с авторами и студиями.</span></div>
-      <div class="step reveal"><b>Приглашать</b><span>Интервью, подкасты и лекции специалистов.</span></div>
-      <div class="step reveal"><b>Производить</b><span>Растить собственные форматы и авторскую школу.</span></div>
+    <div class="ministries production-model">
+      <div class="card ministry reveal"><h3 class="accent">Лицензировать</h3><ul><li>Известные зарубежные документальные фильмы и программы</li><li>Права на показ и озвучивание оригинальных произведений</li></ul></div>
+      <div class="card ministry reveal"><h3 class="gold">Адаптировать и создавать вместе</h3><ul><li>Локальные версии сценариев с разрешения авторов</li><li>Совместные проекты с авторами и студиями</li></ul></div>
+      <div class="card ministry reveal"><h3 class="accent">Приглашать и производить</h3><ul><li>Учёные, специалисты и блогеры</li><li>Интервью, подкасты и собственные передачи</li></ul></div>
     </div>
   </section>
 
-  <section id="slide-funding" class="slide clip" data-hold data-number="26 / 30" data-composition-id="s12funding" data-start="200" data-duration="8" data-label="Финансирование" data-width="1920" data-height="1080">
+  <section id="slide-funding" class="slide clip" data-hold data-number="27 / 30" data-composition-id="s12funding" data-start="208" data-duration="8" data-label="Финансирование" data-width="1920" data-height="1080">
     <div class="kicker reveal">Финансовая модель</div>
     <h2 class="reveal">Государственная основа и собственные доходы</h2>
     <p class="scene-intro reveal">Дополнительные источники могут со временем покрывать часть расходов.</p>
     <div class="funding-grid">
-      <div class="funding-card reveal"><b>01</b><h3>Государство</h3><p>Запуск, общественная задача и базовая инфраструктура.</p></div>
-      <div class="funding-card reveal"><b>02</b><h3>Реклама и спонсоры</h3><p>Рекламные размещения и поддержка отдельных программ.</p></div>
-      <div class="funding-card reveal"><b>03</b><h3>Заказы</h3><p>Производство документальных и образовательных проектов.</p></div>
-      <div class="funding-card reveal"><b>04</b><h3>Свои лицензии</h3><p>Продажа прав на собственные форматы и фильмы.</p></div>
-      <div class="funding-card reveal"><b>05</b><h3>Заказы на локализацию</h3><p>Перевод и подготовка фильмов для кинотеатрального проката по заказу правообладателей и дистрибьюторов.</p></div>
+      <div class="funding-card reveal"><h3>Государство</h3><p>Запуск, общественная задача и базовая инфраструктура.</p></div>
+      <div class="funding-card reveal"><h3>Реклама и спонсоры</h3><p>Рекламные размещения и поддержка отдельных программ.</p></div>
+      <div class="funding-card reveal"><h3>Заказы</h3><p>Производство документальных и образовательных проектов.</p></div>
+      <div class="funding-card reveal"><h3>Свои лицензии</h3><p>Продажа прав на собственные форматы и фильмы.</p></div>
+      <div class="funding-card reveal"><h3>Заказы на локализацию</h3><p>Перевод и подготовка фильмов для кинотеатрального проката по заказу правообладателей и дистрибьюторов.</p></div>
     </div>
     <div class="funding-note reveal">Научная «цензура»: проверка источников, экспертиза и исправление ошибок. Реклама обозначается зрителю.</div>
   </section>
 
-
-  <section id="slide-growth" class="slide clip" data-hold data-number="27 / 30" data-composition-id="s12growth" data-start="208" data-duration="8" data-label="Развитие проекта" data-width="1920" data-height="1080">
+  <section id="slide-growth" class="slide clip" data-hold data-number="28 / 30" data-composition-id="s12growth" data-start="216" data-duration="8" data-label="Развитие проекта" data-width="1920" data-height="1080">
     <div class="kicker reveal">Во что может вырасти телеканал</div>
     <h2 class="reveal">От эфира — к собственной медиакомпании</h2>
+    <p class="growth-subtitle reveal">Направления развития зависят от аудитории, производственных возможностей и прав</p>
     <div class="growth-grid">
-      <div class="growth-card reveal"><div class="growth-number">01</div><h3>Стриминговая платформа</h3><p>Библиотека знаний: выпуски, фильмы и образовательные программы по запросу.</p><div class="growth-route">Эфир → каталог → платформа</div></div>
-      <div class="growth-card reveal"><div class="growth-number">02</div><h3>Кинокомпания и студия</h3><p>Документальные и художественные фильмы, сериалы и новые авторские команды.</p><div class="growth-route">Передачи → фильмы → студия</div></div>
-      <div class="growth-card reveal"><div class="growth-number">03</div><h3>Лицензии за рубеж</h3><p>Предоставлять другим странам права на показ произведений, принадлежащие телеканалу.</p><div class="growth-route">Местная история → мировой зритель</div></div>
+      <div class="growth-card reveal"><h3>Стриминговая платформа</h3><p>Библиотека знаний: выпуски, фильмы и образовательные программы по запросу.</p><div class="growth-route">Эфир → каталог → платформа</div></div>
+      <div class="growth-card reveal"><h3>Кинокомпания и студия</h3><p>Документальные и художественные фильмы, сериалы и новые авторские команды.</p><div class="growth-route">Передачи → фильмы → студия</div></div>
+      <div class="growth-card reveal"><h3>Лицензии за рубеж</h3><p>Предоставлять другим странам права на показ произведений, принадлежащие телеканалу.</p><div class="growth-route">Местная история → мировой зритель</div></div>
     </div>
-    <div class="source">Направления развития зависят от аудитории, производственных возможностей и прав</div>
   </section>
 
-
-  <section id="slide-future" class="slide clip" data-hold data-number="28 / 30" data-composition-id="s12future" data-start="216" data-duration="8" data-label="Горизонт 10–15 лет" data-width="1920" data-height="1080">
+  <section id="slide-future" class="slide clip" data-hold data-number="29 / 30" data-composition-id="s12future" data-start="224" data-duration="8" data-label="Горизонт 10–15 лет" data-width="1920" data-height="1080">
     <div class="kicker reveal">Долгосрочный результат</div>
     <h2 class="reveal">Сегодняшние зрители — завтрашние взрослые</h2>
     <div class="horizon reveal"><div><strong>СЕГОДНЯ</strong><span>ребёнок знакомится с идеей</span></div><div class="horizon-line"><i></i></div><div><strong>10–15 ЛЕТ</strong><span>выбор образования, профессии и собственных проектов</span></div></div>
@@ -583,17 +614,6 @@
       <div class="future-card reveal"><b>Культура знаний</b><p>Новые авторы, фильмы, местные герои и словарь современного мира.</p></div>
     </div>
     <div class="source">Цели и показатели: охват и понимание — раньше; образовательные траектории и установки — на длинной дистанции</div>
-  </section>
-
-
-  <section id="slide-13" class="slide clip" data-hold data-number="29 / 30" data-composition-id="s13" data-start="224" data-duration="8" data-label="Роли министерств" data-width="1920" data-height="1080">
-    <div class="kicker reveal">Кто за что отвечает</div>
-    <h2 class="reveal">У каждого министерства здесь есть конкретная работа</h2>
-    <div class="ministries">
-      <div class="card ministry reveal"><h3 class="accent">Министерство науки и образования</h3><ul><li>научная экспертиза и образовательные стандарты</li><li>связь со школами, университетами и кружками</li><li>профориентация и дополнительное обучение</li><li>оценка понимания и навыков</li></ul></div>
-      <div class="card ministry reveal"><h3 class="gold">Министерство культуры</h3><ul><li>азербайджанский язык современной культуры</li><li>местные герои, наследие и документалистика</li><li>развитие авторов и аудиовизуальных профессий</li><li>международный культурный обмен и адаптация</li></ul></div>
-      <div class="card ministry reveal"><h3 class="accent">Министерство цифрового развития и транспорта</h3><ul><li>технологии, инновации и цифровая инфраструктура</li><li>транспортные проекты и инженерные решения</li><li>доступ к специалистам и реальным проектам</li><li>канал как окно в развитие страны</li></ul></div>
-    </div>
   </section>
 
   <section id="slide-14" class="slide clip" data-hold data-number="30 / 30" data-composition-id="s14" data-start="232" data-duration="8" data-label="Решение" data-width="1920" data-height="1080">
@@ -617,9 +637,9 @@
   </aside>
 
   <script src="i18n.generated.js"></script>
-  <script src="i18n-additions.js?v=20261106l"></script>
-  <script src="interactive-data.js?v=20261106l"></script>
-  <script src="language-controller.js?v=20261106l"></script>
+  <script src="i18n-additions.js?v=20261112a"></script>
+  <script src="interactive-data.js?v=20261112a"></script>
+  <script src="language-controller.js?v=20261112a"></script>
   <script>
     window.__timelines = window.__timelines || {};
     const scenes = Array.from(document.querySelectorAll(".slide")).map((element) => ({

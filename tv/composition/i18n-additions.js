@@ -297,3 +297,20 @@ window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
   "В сетке встречались передачи о необычных явлениях. Здесь канал — пример научно-познавательного формата, не эталон содержания.": "Proqram cədvəlində qeyri-adi hadisələrdən bəhs edən verilişlər olub. Burada kanal məzmun etalonu deyil, elmi-idraki format nümunəsidir.",
   "Логотипы показывают типы вещания. 24 DOC — архивный пример российского документального канала (2005–2017), не «Доктор».": "Loqolar yayım növlərini göstərir. 24 DOC 2005–2017-ci illərdə fəaliyyət göstərmiş Rusiya sənədli kanalının arxiv nümunəsidir, «Doktor» deyil."
 });
+
+window.DECK_TRANSLATIONS = Object.assign(window.DECK_TRANSLATIONS || {}, {
+  "Принимал участие в реструктуризации телеканалов": "Telekanalların restrukturizasiyasında iştirak edib",
+  "Задача Министерств": "Nazirliklərin vəzifəsi",
+  "Что предстоит разбирать": "Nələri araşdıracağıq",
+  "Мифы, псевдонаука и опасные заблуждения": "Miflər, yalançı elm və təhlükəli yanlış inanclar",
+  "Далее — примеры недостоверных утверждений: от астрологии и псевдолечения до теорий заговора. Канал покажет, как их проверять.": "Növbəti slaydda astrologiyadan və yalançı müalicədən sui-qəsd nəzəriyyələrinədək etibarsız iddialar göstərilir. Kanal onların necə yoxlanıldığını izah edəcək.",
+  "Лицензировать": "Lisenziyalaşdırmaq",
+  "Известные зарубежные документальные фильмы и программы": "Tanınmış xarici sənədli filmlər və verilişlər",
+  "Права на показ и озвучивание оригинальных произведений": "Orijinal əsərlərin nümayiş və səsləndirmə hüquqları",
+  "Адаптировать и создавать вместе": "Uyğunlaşdırmaq və birlikdə yaratmaq",
+  "Локальные версии сценариев с разрешения авторов": "Müəlliflərin icazəsi ilə ssenarilərin yerli versiyaları",
+  "Совместные проекты с авторами и студиями": "Müəlliflər və studiyalarla birgə layihələr",
+  "Приглашать и производить": "Dəvət etmək və istehsal etmək",
+  "Учёные, специалисты и блогеры": "Alimlər, mütəxəssislər və bloqerlər",
+  "Интервью, подкасты и собственные передачи": "Müsahibələr, podkastlar və öz verilişlərimiz"
+});
