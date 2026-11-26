@@ -10,6 +10,10 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
 async function contextFor(browser,options={}){
  const context=await browser.newContext({viewport:{width:1280,height:900},...options});
  await context.route('https://review-api.elman.digital/**',route=>route.abort('blockedbyclient'));
+ await context.route('**/talk-shortlist-card.html?*',async route=>{
+  const response=await route.fetch();
+  await route.fulfill({response,body:fs.readFileSync('talk-shortlist-card.html','utf8')});
+ });
  await context.route('**/review/login.js*',async route=>{
   const response=await route.fetch(),body=fs.readFileSync('review/login.js','utf8');
   const old='https://review-api.elman.digital',replacement='https://cv-review-test.elman.digital';
@@ -103,6 +107,10 @@ async function enterReview(page,name){
   await page.locator('.cv-review-dialog .primary').click();await page.locator('.cv-review-dialog').waitFor({state:'detached'});
   await coverTitle.waitFor({state:'visible'});for(let i=0;i<80&&!((await coverTitle.innerText()).includes(coverText));i++)await delay(100);
   assert.match(await coverTitle.innerText(),/QA cover/);
+  phase='video cover playback';
+  await cover.locator('button.cover').click({position:{x:20,y:20}});
+  await page.locator('dialog.video-viewer[open]').waitFor({state:'visible',timeout:15000});
+  await page.locator('dialog.video-viewer [data-video-close]').click();
   phase='carousel copy';const clone=page.locator('#selected-work [data-loop-copy] .work-copy h3').first();
   const order=await clone.evaluate(el=>el.closest('[data-loop-copy]').dataset.order);
   const original=page.locator(`#selected-work .carousel-track > [data-order="${order}"]:not([data-loop-copy]) .work-copy h3`);
