@@ -39,8 +39,9 @@ async function enterReview(page){
 }
 (async()=>{
  const browser=await chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox']});
- const context=await contextFor(browser),page=await context.newPage();const responses=[];
+ const context=await contextFor(browser),page=await context.newPage();const responses=[],editRequests=[];
  page.on('response',r=>{if(r.url().startsWith('https://cv-review-test.elman.digital/'))responses.push({path:new URL(r.url()).pathname,status:r.status()});});
+ page.on('request',r=>{if(r.url()==='https://cv-review-test.elman.digital/edits'&&r.method()==='POST'){try{const j=r.postDataJSON();editRequests.push({page:j.page,expectedRevision:j.expectedRevision,keyLength:j.key?.length,originalLength:j.original?.length})}catch{}}});
  try{
   phase='login form';
   await page.goto('https://elman.digital/login/',{waitUntil:'domcontentloaded'});
@@ -75,6 +76,8 @@ async function enterReview(page){
   await frame.locator('#timelineViewport').evaluate(e=>{e.scrollLeft=0});
   const label=frame.locator('.item-label .item-role').first();await (await findPencil(frame,label)).click();
   await page.locator('.cv-review-dialog textarea').waitFor({state:'visible'});
+  const labelText=await label.innerText(),inputText=await page.locator('.cv-review-dialog textarea').inputValue();
+  if(labelText!==inputText)throw new Error('Pencil selected a different text');
   const chronicleText='QA chronicle '+Date.now();await page.locator('.cv-review-dialog textarea').fill(chronicleText);
   await page.locator('.cv-review-dialog .primary').click();
   await page.waitForFunction(()=>!document.querySelector('.cv-review-dialog')||Boolean(document.querySelector('.cv-review-dialog .cv-review-message')?.textContent),null,{timeout:15000});
@@ -90,6 +93,6 @@ async function enterReview(page){
   await guestPage.goto('https://elman.digital/?az',{waitUntil:'domcontentloaded'});await delay(1000);
   assert.equal(await guestPage.locator('.cv-review-toolbar').count(),0);await guest.close();
   await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,languages:true,guestUnchanged:true,productionWritesBlocked:true}));
- }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350),lastResponses:responses.slice(-8)}));process.exitCode=1;}
+ }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350),lastResponses:responses.slice(-8),lastEditRequests:editRequests.slice(-4)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
