@@ -12,7 +12,7 @@ async function contextFor(browser){
  await context.addCookies([{name:'__Host-cv-review',value:token,url:'https://cv-review-test.elman.digital',httpOnly:true,secure:true,sameSite:'Strict'}]);
  await context.route('https://review-api.elman.digital/**',route=>route.abort('blockedbyclient'));
  await context.route('**/review/editor.js?*',async route=>{
-  const response=await route.fetch(), body=await response.text();
+  const response=await route.fetch(), body=fs.readFileSync('review/editor.js','utf8');
   const old='https://review-api.elman.digital',replacement='https://cv-review-test.elman.digital';
   if(body.split(old).length!==2)throw new Error('Unexpected editor source');
   await route.fulfill({response,body:body.replace(old,replacement)});
@@ -21,13 +21,13 @@ async function contextFor(browser){
 }
 async function findPencil(container,target){
  await target.scrollIntoViewIfNeeded();await target.hover({position:{x:15,y:8}});
+ const targetSelector=await target.evaluate(el=>{const parts=[];let x=el;while(x&&x.nodeType===1){if(x.id&&document.getElementById(x.id)===x){parts.unshift('#'+CSS.escape(x.id));break;}let i=1,p=x.previousElementSibling;while(p){if(p.localName===x.localName)i++;p=p.previousElementSibling;}parts.unshift(x.localName+':nth-of-type('+i+')');if(x===document.body)break;x=x.parentElement;}return parts.join(' > ');});
  for(let attempt=0;attempt<60;attempt++){
-  const area=await target.boundingBox();
   for(const selector of ['.cv-review-pencil:not(.is-changed):not([hidden])','.cv-review-pencil.is-changed:not([hidden])']){
    const pens=container.locator(selector);
    for(let i=0,n=await pens.count();i<n;i++){
-    const box=await pens.nth(i).boundingBox();
-    if(area&&box&&box.y>=area.y-25&&box.y<=area.y+area.height+15&&box.x>=area.x-25&&box.x<=area.x+area.width+30)return pens.nth(i);
+    const key=await pens.nth(i).getAttribute('data-review-key');
+    if(key&&key.startsWith(targetSelector+'|text:'))return pens.nth(i);
    }
   }
   await delay(100);
