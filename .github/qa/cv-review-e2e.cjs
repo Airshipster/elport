@@ -74,7 +74,7 @@ async function enterReview(page){
   await page.locator('.cv-review-dialog textarea').waitFor({state:'visible'});
   const chronicleText='QA chronicle '+Date.now();await page.locator('.cv-review-dialog textarea').fill(chronicleText);
   await page.locator('.cv-review-dialog .primary').click();await page.locator('.cv-review-dialog').waitFor({state:'detached'});
-  await label.waitFor({state:'visible'});assert.match(await label.innerText(),/QA chronicle/);
+  await page.waitForFunction(value=>document.querySelector('#chronicle-frame')?.contentDocument?.querySelector('.item-label .item-role')?.textContent.includes(value),chronicleText,{timeout:15000});
   phase='languages';
   for(const [language,labelText] of [['ru','Комментарии'],['en','Comments']]){
    await page.goto('https://elman.digital/?'+language,{waitUntil:'domcontentloaded'});
