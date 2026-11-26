@@ -39,7 +39,8 @@ async function enterReview(page){
 }
 (async()=>{
  const browser=await chromium.launch({headless:true,executablePath:executable,args:['--no-sandbox']});
- const context=await contextFor(browser),page=await context.newPage();
+ const context=await contextFor(browser),page=await context.newPage();const responses=[];
+ page.on('response',r=>{if(r.url().startsWith('https://cv-review-test.elman.digital/'))responses.push({path:new URL(r.url()).pathname,status:r.status()});});
  try{
   phase='login form';
   await page.goto('https://elman.digital/login/',{waitUntil:'domcontentloaded'});
@@ -57,7 +58,9 @@ async function enterReview(page){
   note=page.locator('.hero-note');const note2=page2.locator('.hero-note');
   await (await findPencil(page,note)).click();await (await findPencil(page2,note2)).click();
   await page.locator('.cv-review-dialog textarea').fill(first+' A');await page2.locator('.cv-review-dialog textarea').fill(first+' B');
-  await page.locator('.cv-review-dialog .primary').click();await page.locator('.cv-review-dialog').waitFor({state:'detached'});
+  await page.locator('.cv-review-dialog .primary').click();
+  await page.waitForFunction(()=>!document.querySelector('.cv-review-dialog')||Boolean(document.querySelector('.cv-review-dialog .cv-review-message')?.textContent),null,{timeout:15000});
+  if(await page.locator('.cv-review-dialog').count())throw new Error('First concurrent save response: '+await page.locator('.cv-review-dialog .cv-review-message').innerText());
   await page2.locator('.cv-review-dialog .primary').click();
   await page2.waitForFunction(()=>document.querySelector('.cv-review-message')?.textContent.includes('başqa iştirakçı'));
   assert.match(await page2.locator('.cv-review-dialog textarea').inputValue(),/ B$/);
@@ -73,7 +76,9 @@ async function enterReview(page){
   const label=frame.locator('.item-label .item-role').first();await (await findPencil(frame,label)).click();
   await page.locator('.cv-review-dialog textarea').waitFor({state:'visible'});
   const chronicleText='QA chronicle '+Date.now();await page.locator('.cv-review-dialog textarea').fill(chronicleText);
-  await page.locator('.cv-review-dialog .primary').click();await page.locator('.cv-review-dialog').waitFor({state:'detached'});
+  await page.locator('.cv-review-dialog .primary').click();
+  await page.waitForFunction(()=>!document.querySelector('.cv-review-dialog')||Boolean(document.querySelector('.cv-review-dialog .cv-review-message')?.textContent),null,{timeout:15000});
+  if(await page.locator('.cv-review-dialog').count())throw new Error('Chronicle save response: '+await page.locator('.cv-review-dialog .cv-review-message').innerText());
   await page.waitForFunction(value=>document.querySelector('#chronicle-frame')?.contentDocument?.querySelector('.item-label .item-role')?.textContent.includes(value),chronicleText,{timeout:15000});
   phase='languages';
   for(const [language,labelText] of [['ru','Комментарии'],['en','Comments']]){
@@ -85,6 +90,6 @@ async function enterReview(page){
   await guestPage.goto('https://elman.digital/?az',{waitUntil:'domcontentloaded'});await delay(1000);
   assert.equal(await guestPage.locator('.cv-review-toolbar').count(),0);await guest.close();
   await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,languages:true,guestUnchanged:true,productionWritesBlocked:true}));
- }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350)}));process.exitCode=1;}
+ }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350),lastResponses:responses.slice(-8)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
