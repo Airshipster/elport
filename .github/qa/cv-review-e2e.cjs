@@ -7,8 +7,8 @@ const executable=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr
 if(!executable)throw new Error('Remote browser executable unavailable');
 let phase='starting';
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
-async function contextFor(browser){
- const context=await browser.newContext({viewport:{width:1280,height:900}});
+async function contextFor(browser,options={}){
+ const context=await browser.newContext({viewport:{width:1280,height:900},...options});
  await context.route('https://review-api.elman.digital/**',route=>route.abort('blockedbyclient'));
  await context.route('**/review/login.js*',async route=>{
   const response=await route.fetch(),body=fs.readFileSync('review/login.js','utf8');
@@ -24,8 +24,8 @@ async function contextFor(browser){
  });
  return context;
 }
-async function findPencil(container,target){
- await target.scrollIntoViewIfNeeded();await target.hover({position:{x:15,y:8}});
+async function findPencil(container,target,method='hover'){
+ await target.scrollIntoViewIfNeeded();if(method==='tap')await target.tap({position:{x:15,y:8}});else await target.hover({position:{x:15,y:8}});
  const targetSelector=await target.evaluate(el=>{const parts=[];let x=el;while(x&&x.nodeType===1){if(x.id&&document.getElementById(x.id)===x){parts.unshift('#'+CSS.escape(x.id));break;}let i=1,p=x.previousElementSibling;while(p){if(p.localName===x.localName)i++;p=p.previousElementSibling;}parts.unshift(x.localName+':nth-of-type('+i+')');if(x===document.body)break;x=x.parentElement;}return parts.join(' > ');});
  for(let attempt=0;attempt<60;attempt++){
   for(const selector of ['.cv-review-pencil:not(.is-changed):not([hidden])','.cv-review-pencil.is-changed:not([hidden])']){
@@ -101,10 +101,15 @@ async function enterReview(page,name){
    await page.locator('.cv-review-toolbar').waitFor({state:'visible',timeout:30000});
    assert.equal(await page.locator('.cv-review-comments').innerText(),labelText);
   }
+  phase='mobile';const mobile=await contextFor(browser,{viewport:{width:390,height:844},hasTouch:true,isMobile:true});
+  const mobilePage=await mobile.newPage();await enterReview(mobilePage,'Reviewer Mobile');
+  const mobileNote=mobilePage.locator('.hero-note');await (await findPencil(mobilePage,mobileNote,'tap')).tap();
+  await mobilePage.locator('.cv-review-dialog textarea').waitFor({state:'visible'});
+  await mobilePage.locator('.cv-review-dialog .cv-review-actions button').nth(1).tap();await mobile.close();
   phase='public visitors';const guest=await browser.newContext(),guestPage=await guest.newPage();
   await guestPage.goto('https://elman.digital/?az',{waitUntil:'domcontentloaded'});await delay(1000);
   assert.equal(await guestPage.locator('.cv-review-toolbar').count(),0);await guest.close();
-  await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,languages:true,guestUnchanged:true,productionWritesBlocked:true}));
+  await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,languages:true,mobile:true,guestUnchanged:true,productionWritesBlocked:true}));
  }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350),lastResponses:responses.slice(-8),lastEditRequests:editRequests.slice(-4)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
