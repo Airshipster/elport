@@ -22,10 +22,13 @@ async function contextFor(browser){
 async function findPencil(container,target){
  await target.scrollIntoViewIfNeeded();await target.hover({position:{x:15,y:8}});
  for(let attempt=0;attempt<60;attempt++){
-  const area=await target.boundingBox();const pens=container.locator('.cv-review-pencil:not([hidden])');
-  for(let i=0,n=await pens.count();i<n;i++){
-   const box=await pens.nth(i).boundingBox();
-   if(area&&box&&box.y>=area.y-25&&box.y<=area.y+area.height+15&&box.x>=area.x-25&&box.x<=area.x+area.width+30)return pens.nth(i);
+  const area=await target.boundingBox();
+  for(const selector of ['.cv-review-pencil:not(.is-changed):not([hidden])','.cv-review-pencil.is-changed:not([hidden])']){
+   const pens=container.locator(selector);
+   for(let i=0,n=await pens.count();i<n;i++){
+    const box=await pens.nth(i).boundingBox();
+    if(area&&box&&box.y>=area.y-25&&box.y<=area.y+area.height+15&&box.x>=area.x-25&&box.x<=area.x+area.width+30)return pens.nth(i);
+   }
   }
   await delay(100);
  }
@@ -77,7 +80,7 @@ async function enterReview(page){
   const label=frame.locator('.item-label .item-role').first();await (await findPencil(frame,label)).click();
   await page.locator('.cv-review-dialog textarea').waitFor({state:'visible'});
   const labelText=await label.innerText(),inputText=await page.locator('.cv-review-dialog textarea').inputValue();
-  if(labelText!==inputText)throw new Error('Pencil selected a different text');
+  if(labelText!==inputText)throw new Error('Pencil selected a different text; lengths='+labelText.length+','+inputText.length);
   const chronicleText='QA chronicle '+Date.now();await page.locator('.cv-review-dialog textarea').fill(chronicleText);
   await page.locator('.cv-review-dialog .primary').click();
   await page.waitForFunction(()=>!document.querySelector('.cv-review-dialog')||Boolean(document.querySelector('.cv-review-dialog .cv-review-message')?.textContent),null,{timeout:15000});
