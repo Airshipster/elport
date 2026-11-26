@@ -24,7 +24,7 @@
   const layer=document.createElement('div');layer.className='cv-review-layer';layer.dataset.reviewUi='';document.body.append(layer);
   const pencilSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.4-1 11-11a2.1 2.1 0 0 0-3-3l-11 11L4 20Zm10.7-13.3 3 3"/></svg>';
   const hover=makePencil(false);hover.hidden=true;
-  let hovered=null,scanTimer=0,positionQueued=false,resizeTimer=0;
+  let hovered=null,scanTimer=0,positionQueued=false,resizeTimer=0,ready=false;
 
   function makePencil(changed){const b=document.createElement('button');b.type='button';b.className='cv-review-pencil'+(changed?' is-changed':'');b.dataset.reviewUi='';b.setAttribute('aria-label',copy.edit);b.title=copy.edit;b.innerHTML=pencilSvg;layer.append(b);return b;}
   function element(tag,cls,value){const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=value;return e;}
@@ -105,7 +105,7 @@
     const value=rec?rec.current_text:info.original, rendered=info.before+value+info.after;
     if(info.node.nodeValue!==rendered){info.rendered=rendered;info.node.nodeValue=rendered;if(page.startsWith('chronicle')){clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>window.dispatchEvent(new Event('resize')),350);}}
     else info.rendered=rendered;
-    if(rec&&!info.pencil){info.pencil=makePencil(true);info.pencil.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openEditor(info)});}
+    if(rec&&!info.pencil){info.pencil=makePencil(true);info.pencil.dataset.reviewKey=info.key;info.pencil.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();openEditor(info)});}
     if(rec&&hovered===info){hovered=null;hover.hidden=true;}
     if(!rec&&info.pencil){info.pencil.remove();info.pencil=null;}
   }
@@ -128,22 +128,23 @@
   function schedulePosition(){if(!positionQueued){positionQueued=true;requestAnimationFrame(position);}}
   function findText(target,x,y){
     const hit=document.caretPositionFromPoint?.(x,y)?.offsetNode || document.caretRangeFromPoint?.(x,y)?.startContainer;
-    if(allowed(hit))return hit;
+    if(allowed(hit)&&target&&(target===hit.parentElement||target.contains?.(hit.parentElement)))return hit;
     if(!target||target.nodeType!==1)return null;
     const direct=[...target.childNodes].find(allowed);if(direct)return direct;
     const walker=document.createTreeWalker(target,NodeFilter.SHOW_TEXT);let n;while((n=walker.nextNode()))if(allowed(n))return n;
     return null;
   }
   async function showPencil(event){
+    if(!ready)return;
     if(event.target.closest?.('[data-review-ui]'))return;
     const node=findText(event.target,event.clientX,event.clientY);
     if(!node){hovered=null;hover.hidden=true;return;}
     const info=await register(node);if(!info||records.has(info.key)){hovered=null;hover.hidden=true;return;}
-    hovered=info;place(hover,info);
+    hovered=info;hover.dataset.reviewKey=info.key;place(hover,info);
   }
   document.addEventListener('pointermove',showPencil,{passive:true});
   document.addEventListener('pointerdown',event=>{if(event.pointerType==='touch')showPencil(event);},{passive:true});
-  document.addEventListener('focusin',async event=>{if(event.target.closest?.('[data-review-ui]'))return;const n=findText(event.target,-1,-1);const info=await register(n);if(info&&!records.has(info.key)){hovered=info;place(hover,info);}});
+  document.addEventListener('focusin',async event=>{if(!ready||event.target.closest?.('[data-review-ui]'))return;const n=findText(event.target,-1,-1);const info=await register(n);if(info&&!records.has(info.key)){hovered=info;hover.dataset.reviewKey=info.key;place(hover,info);}});
   hover.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();if(hovered)openEditor(hovered)});
   window.addEventListener('scroll',schedulePosition,true);window.addEventListener('resize',schedulePosition);
 
@@ -197,7 +198,7 @@
     load().catch(()=>{message.textContent=copy.network});input.focus();
   }
   async function start(){
-    try{await request('/session');await refresh();await scan();}catch(error){
+    try{await request('/session');await refresh();ready=true;await scan();}catch(error){
       layer.remove();
       if(!inFrame){
         const notice=element('div','cv-review-toolbar');notice.dataset.reviewUi='';
@@ -206,7 +207,7 @@
       }else css.remove();
       return;
     }
-    const observer=new MutationObserver(scheduleScan);observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+    const observer=new MutationObserver(scheduleScan);observer.observe(document.body,{subtree:true,childList:true,characterData:true});layer.dataset.reviewReady='1';
     if(!inFrame){
       window.CVReview={edit:(info,done)=>editModal(info,done)};
       const toolbar=element('div','cv-review-toolbar');toolbar.dataset.reviewUi='';const comments=element('button','cv-review-comments',copy.comments),logout=element('button','cv-review-logout',copy.logout);comments.type=logout.type='button';toolbar.append(comments,logout);document.body.append(toolbar);comments.addEventListener('click',commentsModal);
