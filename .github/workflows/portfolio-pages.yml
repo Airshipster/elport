@@ -25,6 +25,15 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - name: Save current text-review checkpoint
+        shell: bash
+        env:
+          REVIEW_CHECKPOINT_TOKEN: ${{ secrets.CV_REVIEW_CHECKPOINT_TOKEN }}
+        run: |
+          test -n "$REVIEW_CHECKPOINT_TOKEN"
+          curl --fail --silent --show-error --retry 2 --max-time 30 \
+            -H "X-Review-Checkpoint: $REVIEW_CHECKPOINT_TOKEN" \
+            -X POST https://review-api.elman.digital/admin/checkpoint > /dev/null
       - uses: actions/configure-pages@v5
       - name: Prepare portfolio without TV source files
         shell: bash
