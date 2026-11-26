@@ -26,7 +26,7 @@ async function contextFor(browser,options={}){
 }
 async function findPencil(container,target,method='hover'){
  await target.scrollIntoViewIfNeeded();if(method==='tap')await target.tap({position:{x:15,y:8}});else await target.hover({position:{x:15,y:8}});
- const targetSelector=await target.evaluate(el=>{const parts=[];let x=el;while(x&&x.nodeType===1){if(x.id&&document.getElementById(x.id)===x){parts.unshift('#'+CSS.escape(x.id));break;}let i=1,p=x.previousElementSibling;while(p){if(p.localName===x.localName)i++;p=p.previousElementSibling;}parts.unshift(x.localName+':nth-of-type('+i+')');if(x===document.body)break;x=x.parentElement;}return parts.join(' > ');});
+ const targetSelector=await target.evaluate(el=>{let x=el;const clone=x.closest('[data-loop-copy]');if(clone){const real=[...clone.parentElement.children].find(y=>!y.hasAttribute('data-loop-copy')&&y.dataset.order===clone.dataset.order);if(real){const indexes=[];while(x!==clone){indexes.unshift([...x.parentElement.children].indexOf(x));x=x.parentElement;}x=real;for(const index of indexes)x=x.children[index];}}const parts=[];while(x&&x.nodeType===1){if(x.id&&document.getElementById(x.id)===x){parts.unshift('#'+CSS.escape(x.id));break;}let i=1,p=x.previousElementSibling;while(p){if(p.localName===x.localName)i++;p=p.previousElementSibling;}parts.unshift(x.localName+':nth-of-type('+i+')');if(x===document.body)break;x=x.parentElement;}return parts.join(' > ');});
  for(let attempt=0;attempt<60;attempt++){
   for(const selector of ['.cv-review-pencil:not(.is-changed):not([hidden])','.cv-review-pencil.is-changed:not([hidden])']){
    const pens=container.locator(selector);
@@ -95,6 +95,22 @@ async function enterReview(page,name){
   await page.waitForFunction(()=>!document.querySelector('.cv-review-dialog')||Boolean(document.querySelector('.cv-review-dialog .cv-review-message')?.textContent),null,{timeout:15000});
   if(await page.locator('.cv-review-dialog').count())throw new Error('Chronicle save response: '+await page.locator('.cv-review-dialog .cv-review-message').innerText());
   await page.waitForFunction(value=>document.querySelector('#chronicle-frame')?.contentDocument?.querySelector('.item-label .item-role')?.textContent.includes(value),chronicleText,{timeout:15000});
+  phase='video cover';const coverIframe=page.locator('#talks .slide:not([data-loop-copy]) .talk-shortlist-frame').first();
+  await coverIframe.scrollIntoViewIfNeeded();const cover=coverIframe.contentFrame();
+  await cover.locator('.cv-review-layer[data-review-ready="1"]').waitFor({state:'attached',timeout:30000});
+  const coverTitle=cover.locator('.cover-event');await (await findPencil(cover,coverTitle)).click();
+  const coverText='QA cover '+Date.now();await page.locator('.cv-review-dialog textarea').fill(coverText);
+  await page.locator('.cv-review-dialog .primary').click();await page.locator('.cv-review-dialog').waitFor({state:'detached'});
+  await coverTitle.waitFor({state:'visible'});for(let i=0;i<80&&!((await coverTitle.innerText()).includes(coverText));i++)await delay(100);
+  assert.match(await coverTitle.innerText(),/QA cover/);
+  phase='carousel copy';const clone=page.locator('#selected-work [data-loop-copy] .work-copy h3').first();
+  const order=await clone.evaluate(el=>el.closest('[data-loop-copy]').dataset.order);
+  const original=page.locator(`#selected-work .carousel-track > [data-order="${order}"]:not([data-loop-copy]) .work-copy h3`);
+  await (await findPencil(page,clone)).click();const copyText='QA copy '+Date.now();
+  await page.locator('.cv-review-dialog textarea').fill(copyText);await page.locator('.cv-review-dialog .primary').click();
+  await page.locator('.cv-review-dialog').waitFor({state:'detached'});
+  await page.waitForFunction(({order,value})=>{const track=document.querySelector('#selected-work .carousel-track');return [...track.children].filter(x=>x.dataset.order===order).every(x=>x.querySelector('.work-copy h3')?.textContent.includes(value));},{order,value:copyText});
+  assert.match(await original.innerText(),/QA copy/);
   phase='languages';
   for(const [language,labelText] of [['ru','Комментарии'],['en','Comments']]){
    await page.goto('https://elman.digital/?'+language,{waitUntil:'domcontentloaded'});
@@ -109,7 +125,7 @@ async function enterReview(page,name){
   phase='public visitors';const guest=await browser.newContext(),guestPage=await guest.newPage();
   await guestPage.goto('https://elman.digital/?az',{waitUntil:'domcontentloaded'});await delay(1000);
   assert.equal(await guestPage.locator('.cv-review-toolbar').count(),0);await guest.close();
-  await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,languages:true,mobile:true,guestUnchanged:true,productionWritesBlocked:true}));
+  await context2.close();console.log(JSON.stringify({pass:true,remoteBrowser:true,loginInputsEmpty:true,persistedEdit:true,conflictPreserved:true,sharedComments:true,chronicle:true,videoCover:true,carouselCopy:true,languages:true,mobile:true,guestUnchanged:true,productionWritesBlocked:true}));
  }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,350),lastResponses:responses.slice(-8),lastEditRequests:editRequests.slice(-4)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
