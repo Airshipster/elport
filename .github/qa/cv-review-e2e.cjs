@@ -76,6 +76,7 @@ async function enterReview(page){
   await page.locator('.cv-review-dialog .cv-review-actions button').nth(1).click();
   phase='chronicle';const iframe=page.locator('#chronicle-frame');await iframe.scrollIntoViewIfNeeded();
   const frame=page.frameLocator('#chronicle-frame');await frame.locator('#timelineViewport').waitFor({state:'visible',timeout:30000});
+  await frame.locator('.cv-review-layer[data-review-ready="1"]').waitFor({state:'attached',timeout:30000});
   await frame.locator('#timelineViewport').evaluate(e=>{e.scrollLeft=0});
   const label=frame.locator('.item-label .item-role').first();await (await findPencil(frame,label)).click();
   await page.locator('.cv-review-dialog textarea').waitFor({state:'visible'});

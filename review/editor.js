@@ -207,7 +207,7 @@
       }else css.remove();
       return;
     }
-    const observer=new MutationObserver(scheduleScan);observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+    const observer=new MutationObserver(scheduleScan);observer.observe(document.body,{subtree:true,childList:true,characterData:true});layer.dataset.reviewReady='1';
     if(!inFrame){
       window.CVReview={edit:(info,done)=>editModal(info,done)};
       const toolbar=element('div','cv-review-toolbar');toolbar.dataset.reviewUi='';const comments=element('button','cv-review-comments',copy.comments),logout=element('button','cv-review-logout',copy.logout);comments.type=logout.type='button';toolbar.append(comments,logout);document.body.append(toolbar);comments.addEventListener('click',commentsModal);
