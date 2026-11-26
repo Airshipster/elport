@@ -23,5 +23,5 @@ jobs:
         shell: bash
         env:
           NODE_PATH: ${{ runner.temp }}/cv-review-qa/node_modules
-          CV_REVIEW_QA_COOKIE: ${{ secrets.CV_REVIEW_QA_STAGING_COOKIE_20261126 }}
+          CV_REVIEW_QA_PASSWORD: ${{ secrets.CV_REVIEW_QA_PASSWORD_20261126 }}
         run: node .github/qa/cv-review-e2e.cjs

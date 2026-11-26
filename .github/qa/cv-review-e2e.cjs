@@ -1,16 +1,21 @@
 const {chromium}=require('playwright-core');
 const fs=require('node:fs');
 const assert=require('node:assert/strict');
-const token=process.env.CV_REVIEW_QA_COOKIE;
-if(!/^[a-f0-9]{64}$/.test(token||''))throw new Error('Missing isolated staging session');
+const password=process.env.CV_REVIEW_QA_PASSWORD;
+if(!password||password.length<20)throw new Error('Missing isolated staging credentials');
 const executable=['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium-browser','/usr/bin/chromium'].find(fs.existsSync);
 if(!executable)throw new Error('Remote browser executable unavailable');
 let phase='starting';
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 async function contextFor(browser){
  const context=await browser.newContext({viewport:{width:1280,height:900}});
- await context.addCookies([{name:'__Host-cv-review',value:token,url:'https://cv-review-test.elman.digital',httpOnly:true,secure:true,sameSite:'Strict'}]);
  await context.route('https://review-api.elman.digital/**',route=>route.abort('blockedbyclient'));
+ await context.route('**/review/login.js*',async route=>{
+  const response=await route.fetch(),body=fs.readFileSync('review/login.js','utf8');
+  const old='https://review-api.elman.digital',replacement='https://cv-review-test.elman.digital';
+  if(body.split(old).length!==2)throw new Error('Unexpected login source');
+  await route.fulfill({response,body:body.replace(old,replacement)});
+ });
  await context.route('**/review/editor.js?*',async route=>{
   const response=await route.fetch(), body=fs.readFileSync('review/editor.js','utf8');
   const old='https://review-api.elman.digital',replacement='https://cv-review-test.elman.digital';
@@ -34,10 +39,13 @@ async function findPencil(container,target){
  }
  throw new Error('Pencil not found near target');
 }
-async function enterReview(page){
- await page.goto('https://elman.digital/?az',{waitUntil:'domcontentloaded'});
- await page.evaluate(()=>localStorage.setItem('cv-review-active','1'));
- await page.reload({waitUntil:'domcontentloaded'});
+async function enterReview(page,name){
+ await page.goto('https://elman.digital/login/',{waitUntil:'domcontentloaded'});
+ await page.locator('input[name="login"]').fill('review');
+ await page.locator('input[name="password"]').fill(password);
+ await page.locator('input[name="name"]').fill(name);
+ await page.locator('button[type="submit"]').click();
+ await page.waitForURL(url=>url.origin==='https://elman.digital'&&!url.pathname.startsWith('/login'),{timeout:30000});
  await page.locator('.cv-review-toolbar').waitFor({state:'visible',timeout:30000});
 }
 (async()=>{
@@ -51,14 +59,14 @@ async function enterReview(page){
   for(const field of ['login','password','name'])assert.equal(await page.locator(`input[name="${field}"]`).inputValue(),'');
   await page.locator('[data-lang="ru"]').click();assert.match(await page.locator('h1').innerText(),/Согласование/);
   await page.locator('[data-lang="az"]').click();assert.match(await page.locator('h1').innerText(),/razılaşdırılması/i);
-  phase='save and reload';await enterReview(page);
+  phase='save and reload';await enterReview(page,'Reviewer A');
   let note=page.locator('.hero-note');let pen=await findPencil(page,note);await pen.click();
   let input=page.locator('.cv-review-dialog textarea');await input.waitFor({state:'visible'});
   const first='TEST REVIEW '+Date.now();await input.fill(first);await page.locator('.cv-review-dialog .primary').click();
   await page.locator('.cv-review-dialog').waitFor({state:'detached'});await page.waitForFunction(value=>document.querySelector('.hero-note')?.textContent.includes(value),first);
   await page.reload({waitUntil:'domcontentloaded'});await page.locator('.cv-review-toolbar').waitFor({state:'visible'});
   await page.waitForFunction(value=>document.querySelector('.hero-note')?.textContent.includes(value),first);
-  phase='concurrent edits';const context2=await contextFor(browser),page2=await context2.newPage();await enterReview(page2);
+  phase='concurrent edits';const context2=await contextFor(browser),page2=await context2.newPage();await enterReview(page2,'Reviewer B');
   note=page.locator('.hero-note');const note2=page2.locator('.hero-note');
   await (await findPencil(page,note)).click();await (await findPencil(page2,note2)).click();
   await page.locator('.cv-review-dialog textarea').fill(first+' A');await page2.locator('.cv-review-dialog textarea').fill(first+' B');
