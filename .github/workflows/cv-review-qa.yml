@@ -1,0 +1,27 @@
+name: Temporary review browser QA
+
+on:
+  push:
+    branches: [review-qa-20261126]
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser driver
+        shell: bash
+        run: npm install --prefix "$RUNNER_TEMP/cv-review-qa" playwright-core@1.56.1 --no-audit --no-fund
+      - name: Exercise isolated review flow
+        shell: bash
+        env:
+          NODE_PATH: ${{ runner.temp }}/cv-review-qa/node_modules
+          CV_REVIEW_QA_COOKIE: ${{ secrets.CV_REVIEW_QA_STAGING_COOKIE_20261126 }}
+        run: node .github/qa/cv-review-e2e.cjs
