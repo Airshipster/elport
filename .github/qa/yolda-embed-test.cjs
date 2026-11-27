@@ -42,6 +42,7 @@ async function openMap(page,language){
   phase='desktop map';const desktop=await openMap(page,'ru');
   assert.ok(desktop.rect.width>desktop.rect.height,'desktop iframe landscape');
   assert.equal((await desktop.figure.locator('p').innerText()).trim(),'Модель движения общественного транспорта Азербайджана.');
+  console.log('credit-style',JSON.stringify(await desktop.figure.locator('.yolda-credit-overlay a').evaluate(e=>{const s=getComputedStyle(e);return {color:s.color,opacity:s.opacity,visibility:s.visibility,background:s.backgroundColor,rect:e.getBoundingClientRect().toJSON()};})));
   await page.locator('#research-interactive').screenshot({path:'qa-output/embed-desktop.png'});
   await page.locator('#research-interactive [data-close-interactive]').click();
   await page.locator('#research').screenshot({path:'qa-output/research-desktop.png'});

@@ -44,9 +44,22 @@ function fitPreview(){
   const factor=225/current;if(!Number.isFinite(factor)||factor<=1.001)return;
   const city=projectedCity(box.width,box.height);
   const goalX=box.width*.5,goalY=box.height*(box.width/box.height>1.2?.46:.50);
-  const anchorX=(factor*city.x-goalX)/(factor-1),anchorY=(factor*city.y-goalY)/(factor-1);
   canvas.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,ctrlKey:true,
-    deltaY:-100*Math.log(factor),clientX:box.left+anchorX,clientY:box.top+anchorY}));
+    deltaY:-100*Math.log(factor),clientX:box.left+box.width/2,clientY:box.top+box.height/2}));
+  // Yolda's zoom remains centered; use its normal drag handler to place the bay below the city.
+  const scaledX=box.width/2+(city.x-box.width/2)*factor;
+  const scaledY=box.height/2+(city.y-box.height/2)*factor;
+  const dx=goalX-scaledX,dy=goalY-scaledY,startX=box.left+box.width/2,startY=box.top+box.height/2;
+  const previous=Object.getOwnPropertyDescriptor(canvas,'setPointerCapture');
+  Object.defineProperty(canvas,'setPointerCapture',{configurable:true,value:()=>{}});
+  try{
+    const pointer={pointerId:98761,pointerType:'mouse',isPrimary:true,bubbles:true,cancelable:true};
+    canvas.dispatchEvent(new PointerEvent('pointerdown',{...pointer,button:0,buttons:1,clientX:startX,clientY:startY}));
+    canvas.dispatchEvent(new PointerEvent('pointermove',{...pointer,button:0,buttons:1,clientX:startX+dx,clientY:startY+dy}));
+    canvas.dispatchEvent(new PointerEvent('pointerup',{...pointer,button:0,buttons:0,clientX:startX+dx,clientY:startY+dy}));
+  }finally{
+    if(previous)Object.defineProperty(canvas,'setPointerCapture',previous);else delete canvas.setPointerCapture;
+  }
 }
 
 try{
