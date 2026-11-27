@@ -15,15 +15,10 @@ jobs:
           node-version: 22
       - name: Install isolated browser driver
         run: npm install --prefix "$RUNNER_TEMP/portfolio-qa" playwright-core@1.56.1 --no-audit --no-fund
-      - name: Validate candidate in browser
+      - name: Validate deployed site in browser
         env:
           NODE_PATH: ${{ runner.temp }}/portfolio-qa/node_modules
-        run: node .github/qa/candidate-test.cjs
-      - name: Validate review in isolated storage
-        env:
-          NODE_PATH: ${{ runner.temp }}/portfolio-qa/node_modules
-          CV_REVIEW_QA_PASSWORD: ${{ secrets.CV_REVIEW_QA_PASSWORD_20261126 }}
-        run: node .github/qa/review-preservation.cjs
+        run: node .github/qa/live-smoke.cjs
       - name: Save screenshots
         if: always()
         uses: actions/upload-artifact@v4
