@@ -15,15 +15,10 @@ jobs:
           node-version: 22
       - name: Install isolated browser driver
         run: npm install --prefix "$RUNNER_TEMP/yolda-embed-qa" playwright-core@1.56.1 --no-audit --no-fund
-      - name: Test responsive embedded map
+      - name: Test deployed site
         env:
           NODE_PATH: ${{ runner.temp }}/yolda-embed-qa/node_modules
-        run: node .github/qa/yolda-embed-test.cjs
-      - name: Test review in isolated storage
-        env:
-          NODE_PATH: ${{ runner.temp }}/yolda-embed-qa/node_modules
-          CV_REVIEW_QA_PASSWORD: ${{ secrets.CV_REVIEW_QA_PASSWORD_20261126 }}
-        run: node .github/qa/review-preservation.cjs
+        run: node .github/qa/live-smoke.cjs
       - name: Save screenshots
         if: always()
         uses: actions/upload-artifact@v4
