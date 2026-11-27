@@ -19,6 +19,11 @@ jobs:
         env:
           NODE_PATH: ${{ runner.temp }}/portfolio-qa/node_modules
         run: node .github/qa/candidate-test.cjs
+      - name: Validate review in isolated storage
+        env:
+          NODE_PATH: ${{ runner.temp }}/portfolio-qa/node_modules
+          CV_REVIEW_QA_PASSWORD: ${{ secrets.CV_REVIEW_QA_PASSWORD_20261126 }}
+        run: node .github/qa/review-preservation.cjs
       - name: Save screenshots
         if: always()
         uses: actions/upload-artifact@v4
