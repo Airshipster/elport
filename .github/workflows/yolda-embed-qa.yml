@@ -1,0 +1,28 @@
+name: Yolda embed visual QA
+on:
+  push:
+    branches: [portfolio-yolda-embed-qa-20261127]
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install isolated browser driver
+        run: npm install --prefix "$RUNNER_TEMP/yolda-embed-qa" playwright-core@1.56.1 --no-audit --no-fund
+      - name: Test responsive embedded map
+        env:
+          NODE_PATH: ${{ runner.temp }}/yolda-embed-qa/node_modules
+        run: node .github/qa/yolda-embed-test.cjs
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yolda-embed-qa
+          path: qa-output/
+          if-no-files-found: ignore
