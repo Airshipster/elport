@@ -10,7 +10,7 @@ async function useCandidate(context){
   const u=new URL(route.request().url()),name=u.pathname==='/'?'index.html':decodeURIComponent(u.pathname).replace(/^\/+/, '');
   const full=path.resolve(name),root=path.resolve('.')+path.sep;
   if(!full.startsWith(root)||!fs.existsSync(full)||!fs.statSync(full).isFile())return route.continue();
-  await route.fulfill({status:200,contentType:types[path.extname(full)]||'application/octet-stream',body:fs.readFileSync(full)});
+  await route.fulfill({status:200,contentType:types[path.extname(full)]||'application/octet-stream',headers:{'access-control-allow-origin':'*'},body:fs.readFileSync(full)});
  });
 }
 async function openMap(page,language){
@@ -47,6 +47,11 @@ async function openMap(page,language){
   const credit=await desktop.figure.locator('.yolda-credit-overlay a').evaluate(e=>{const s=getComputedStyle(e);return {color:s.color,opacity:s.opacity,visibility:s.visibility,background:s.backgroundColor};});
   assert.equal(credit.color,'rgb(255, 255, 255)');assert.equal(credit.visibility,'visible');
   await page.locator('#research-interactive').screenshot({path:'qa-output/embed-desktop.png'});
+  phase='fullscreen map';
+  const fullscreen=desktop.frame.locator('.tr-zoom button[data-fullscreen]');await fullscreen.click();
+  await fullscreen.waitFor({state:'visible'});
+  await page.waitForFunction(()=>document.fullscreenElement!==null,null,{timeout:10000});
+  await fullscreen.click();await page.waitForFunction(()=>document.fullscreenElement===null,null,{timeout:10000});
   await page.locator('#research-interactive [data-close-interactive]').click();
   await page.locator('#research').screenshot({path:'qa-output/research-desktop.png'});
   phase='English and Azerbaijani';
