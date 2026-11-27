@@ -26,9 +26,11 @@ async function openMap(page,language){
  await figure.locator('[data-interactive="yolda"]').click();
  const iframe=page.locator('#research-interactive iframe');
  assert.match(await iframe.getAttribute('src'),/yolda-embed\.html\?lang=/);
+ assert.ok(!(await iframe.getAttribute('sandbox')).includes('allow-same-origin'),'embed is isolated from parent site');
  const frame=iframe.contentFrame();
  await frame.locator('#loading').waitFor({state:'hidden',timeout:90000});
  await frame.locator('#player.tiles').waitFor({state:'visible',timeout:90000});
+ assert.equal(await frame.locator('#player').evaluate(()=>{try{return Boolean(parent.document)}catch{return false}}),false,'embedded project cannot read parent page');
  let zoom=0;for(let i=0;i<50;i++){zoom=parseInt(await frame.locator('.tr-zoom-value').textContent(),10);if(zoom>=220)break;await sleep(200);}
  assert.ok(zoom>=220&&zoom<=230,'initial map zoom: '+zoom);
  const rect=await iframe.boundingBox();
