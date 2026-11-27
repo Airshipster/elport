@@ -79,6 +79,20 @@ async function inspectPage(page,lang){
     await figure.locator('[data-interactive="yolda"]').tap();
     const mobileFrame=phone.frameLocator('#research-interactive iframe');
     await mobileFrame.locator('.tr-clock').waitFor({state:'visible',timeout:90000});
+    await mobileFrame.locator('#player.tiles').waitFor({state:'visible',timeout:90000});
+    let clock='';for(let attempt=0;attempt<90;attempt++){
+      clock=(await mobileFrame.locator('.tr-clock').innerText()).trim();
+      if(/^\d{2}:\d{2}$/.test(clock))break;
+      await sleep(1000);
+    }
+    assert.match(clock,/^\d{2}:\d{2}$/,'mobile model data finishes loading');
+    await mobileFrame.locator('.tr-zoom button[data-z="1.6"]').tap();
+    let zoom=0;for(let attempt=0;attempt<30;attempt++){
+      zoom=parseInt(await mobileFrame.locator('.tr-zoom-value').innerText(),10);
+      if(zoom>100)break;
+      await sleep(200);
+    }
+    assert.ok(zoom>100,'embedded map zoom responds on mobile');
     await phone.locator('#research-interactive').screenshot({path:'qa-output/yolda-embedded-mobile.png'});
     await mobile.close();
     console.log(JSON.stringify({pass:true,localizedResearch:true,actualYoldaEmbed:true,existingDashboard:true,carouselCenters:true,carouselNavigation:true,linkArrowsHidden:true,mobile:true,reviewProductionWritesBlocked:true}));
