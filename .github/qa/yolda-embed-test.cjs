@@ -42,7 +42,8 @@ async function openMap(page,language){
   phase='desktop map';const desktop=await openMap(page,'ru');
   assert.ok(desktop.rect.width>desktop.rect.height,'desktop iframe landscape');
   assert.equal((await desktop.figure.locator('p').innerText()).trim(),'Модель движения общественного транспорта Азербайджана.');
-  console.log('credit-style',JSON.stringify(await desktop.figure.locator('.yolda-credit-overlay a').evaluate(e=>{const s=getComputedStyle(e);return {color:s.color,opacity:s.opacity,visibility:s.visibility,background:s.backgroundColor,rect:e.getBoundingClientRect().toJSON()};})));
+  const credit=await desktop.figure.locator('.yolda-credit-overlay a').evaluate(e=>{const s=getComputedStyle(e);return {color:s.color,opacity:s.opacity,visibility:s.visibility,background:s.backgroundColor};});
+  assert.equal(credit.color,'rgb(255, 255, 255)');assert.equal(credit.visibility,'visible');
   await page.locator('#research-interactive').screenshot({path:'qa-output/embed-desktop.png'});
   await page.locator('#research-interactive [data-close-interactive]').click();
   await page.locator('#research').screenshot({path:'qa-output/research-desktop.png'});
@@ -60,6 +61,9 @@ async function openMap(page,language){
   const plus=m.frame.locator('.tr-zoom button[data-z="1.6"]');await plus.tap();
   let after=0;for(let i=0;i<30;i++){after=parseInt(await m.frame.locator('.tr-zoom-value').textContent(),10);if(after>m.zoom+50)break;await sleep(200);}
   assert.ok(after>m.zoom+50,'manual zoom works: '+after);
+  await phone.setViewportSize({width:844,height:390});await sleep(1500);
+  const afterResize=parseInt(await m.frame.locator('.tr-zoom-value').textContent(),10);
+  assert.ok(afterResize>270,'manual zoom survives resize: '+afterResize);
   await mobile.close();
   assert.deepEqual(errors,[]);
   console.log(JSON.stringify({pass:true,desktopZoom:desktop.zoom,desktopSize:desktop.rect,mobileZoom:m.zoom,mobileSize:m.rect,manualZoom:after,threeLanguages:true,cleanCaption:true,emptyFavicon:true,noindex:true,productionReviewWritesBlocked:true}));
