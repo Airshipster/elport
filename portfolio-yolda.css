@@ -1,0 +1,21 @@
+/* Keep the external links and their text; hide only their decorative arrow. */
+a.text-link > span[aria-hidden="true"] { display: none; }
+
+/* Symmetrical chevrons sit in the exact centre of the existing buttons. */
+.carousel-controls button[data-dir] span {
+  display: grid; place-items: center; width: 20px; height: 20px;
+  transform: none; font-size: 0; line-height: 0;
+}
+.carousel-controls button[data-dir] span::before {
+  content: ""; width: 8px; height: 8px; box-sizing: border-box;
+  border-left: 2px solid currentColor; border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.carousel-controls button[data-dir="1"] span::before { transform: rotate(225deg); }
+
+/* Four equally sized research previews, with legible cards on smaller screens. */
+@media (min-width: 1100px) { html .artifact-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 768px) and (max-width: 1099px) { html .artifact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.yolda-attribution { display: block; margin-top: 7px; font-size: 11px; line-height: 1.4; color: var(--ref-muted, #747b86); }
+.yolda-attribution a { color: inherit; }
+.research-interactive[data-interactive="yolda"] iframe { height: min(850px, 80vh); min-height: min(600px, 80vh); }
