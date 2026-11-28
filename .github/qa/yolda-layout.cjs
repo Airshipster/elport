@@ -78,6 +78,7 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   }
   assert.match(summary,/\d.*канал/i,'V2 graph data loaded with actual channel count');
   const mapBox=await v2.locator('#map').boundingBox();assert.ok(mapBox&&mapBox.width>100&&mapBox.height>100,'V2 canvas visible');
+  await v2.locator('body[data-intro="complete"]').waitFor({state:'attached',timeout:30000});await sleep(1500);
   await page.screenshot({path:'qa-output/v2-viewport.png'});
   phase='mobile layout';
   const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,ignoreHTTPSErrors:true});await setup(mobile);
