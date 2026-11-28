@@ -1,0 +1,28 @@
+name: Yolda threshold and layout QA
+on:
+  push:
+    branches: [portfolio-yolda-layout-qa-20261128]
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install browser driver
+        run: npm install --prefix "$RUNNER_TEMP/yolda-layout" playwright-core@1.56.1 --no-audit --no-fund
+      - name: Verify map threshold and dimensions
+        env:
+          NODE_PATH: ${{ runner.temp }}/yolda-layout/node_modules
+        run: node .github/qa/yolda-layout.cjs
+      - name: Save visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: yolda-layout-qa
+          path: qa-output/
+          if-no-files-found: ignore
