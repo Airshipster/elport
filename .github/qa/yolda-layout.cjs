@@ -1,6 +1,7 @@
 const {chromium}=require('playwright-core');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 fs.mkdirSync('qa-output',{recursive:true});const sleep=ms=>new Promise(r=>setTimeout(r,ms));let phase='start';
+const prefix=process.env.QA_LIVE==='1'?'live-':'';
 const types={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.svg':'image/svg+xml','.woff2':'font/woff2'};
 async function setup(context){
  await context.addInitScript(()=>{
@@ -9,7 +10,7 @@ async function setup(context){
   p.drawImage=function(img,...args){if(img?.__qaRouteBadge)window.__qaBadgeDraws=(window.__qaBadgeDraws||0)+1;return draw.call(this,img,...args)};
  });
  await context.route('https://review-api.elman.digital/**',r=>r.abort('blockedbyclient'));
- await context.route('https://elman.digital/**',async route=>{
+ if(!prefix)await context.route('https://elman.digital/**',async route=>{
   const u=new URL(route.request().url()),name=u.pathname==='/'?'index.html':decodeURIComponent(u.pathname).replace(/^\/+/, '');
   const full=path.resolve(name),root=path.resolve('.')+path.sep;
   if(!full.startsWith(root)||!fs.existsSync(full)||!fs.statSync(full).isFile())return route.continue();
@@ -47,7 +48,7 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   for(let i=0;i<45&&!(await badges(d.frame));i++)await sleep(200);
   assert.ok(await badges(d.frame)>0,'actual route numbers are drawn at 220%');
   await sleep(2000);assert.equal(await d.frame.locator('.tr-zoom-value').textContent(),'220%');
-  await page.screenshot({path:'qa-output/desktop-viewport.png'});
+  await page.screenshot({path:`qa-output/${prefix}desktop-viewport.png`});
   phase='resize before interaction';
   await page.setViewportSize({width:1100,height:850});
   let resizeZoom='';for(let i=0;i<60;i++){await sleep(250);resizeZoom=await d.frame.locator('.tr-zoom-value').textContent();if(resizeZoom==='220%'&&i>=8)break;}
@@ -68,7 +69,7 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   const cardInfo=await v2Card.evaluate(e=>({loopCopy:!!e.closest('[data-loop-copy]'),parent:e.parentElement?.className,expanded:e.getAttribute('aria-expanded')}));
   await v2Card.scrollIntoViewIfNeeded();await sleep(1000);await v2Card.click();await sleep(500);
   console.log(JSON.stringify({v2Click:cardInfo,events:await page.evaluate(()=>window.__qaClicks),mode:await page.locator('#research-interactive').getAttribute('data-interactive')}));
-  await page.screenshot({path:'qa-output/after-v2-click.png'});
+  await page.screenshot({path:`qa-output/${prefix}after-v2-click.png`});
   const v2=page.frameLocator('#research-interactive iframe');
   assert.equal(await page.locator('#research-interactive iframe').getAttribute('sandbox'),null);
   await v2.locator('#map').waitFor({state:'attached',timeout:90000});
@@ -79,16 +80,16 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   assert.match(summary,/\d.*канал/i,'V2 graph data loaded with actual channel count');
   const mapBox=await v2.locator('#map').boundingBox();assert.ok(mapBox&&mapBox.width>100&&mapBox.height>100,'V2 canvas visible');
   await v2.locator('body[data-intro="complete"]').waitFor({state:'attached',timeout:30000});await sleep(1500);
-  await page.screenshot({path:'qa-output/v2-viewport.png'});
+  await page.screenshot({path:`qa-output/${prefix}v2-viewport.png`});
   phase='mobile layout';
   const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,ignoreHTTPSErrors:true});await setup(mobile);
   const phone=await mobile.newPage(),m=await openAndCompare(phone);
   for(let i=0;i<45&&!(await badges(m.frame));i++)await sleep(200);
   assert.ok(await badges(m.frame)>0,'route numbers rendered on mobile');
   await sleep(2000);assert.equal(await m.frame.locator('.tr-zoom-value').textContent(),'220%');
-  await phone.screenshot({path:'qa-output/mobile-viewport.png'});
+  await phone.screenshot({path:`qa-output/${prefix}mobile-viewport.png`});
   await mobile.close();assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({pass:true,desktopHeight:d.rect.height,dashboardHeight:d.first.height,mobileHeight:m.rect.height,mobileDashboardHeight:m.first.height,initialZoom:d.zoom,belowZoom,belowBadges:below,atThresholdBadges:at,collabV2Loaded:true,isolated:true,reviewProductionWritesBlocked:true}));
+  console.log(JSON.stringify({pass:true,desktopHeight:d.rect.height,dashboardHeight:d.first.height,mobileHeight:m.rect.height,mobileDashboardHeight:m.first.height,initialZoom:d.zoom,belowZoom,belowBadges:below,atThresholdBadges:at,collabV2Loaded:true,live:!!prefix,reviewProductionWritesBlocked:true}));
  }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,900),pageErrors:errors.slice(-4)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
