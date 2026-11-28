@@ -5,7 +5,3 @@
 .artifact-grid figcaption h3 a { color: inherit; text-decoration: none; }
 .artifact-grid figcaption h3 a:hover { text-decoration: underline; }
 .artifact-grid figcaption h3 a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-.research-interactive[data-interactive="collabs-v2"] iframe { height: 980px; }
-@media (max-width: 600px) {
-  .research-interactive[data-interactive="collabs-v2"] iframe { height: 920px; min-height: 920px; }
-}
