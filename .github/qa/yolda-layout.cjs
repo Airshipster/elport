@@ -46,7 +46,12 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   phase='desktop layout';const d=await openAndCompare(page);
   for(let i=0;i<45&&!(await badges(d.frame));i++)await sleep(200);
   assert.ok(await badges(d.frame)>0,'actual route numbers are drawn at 220%');
-  await page.locator('#research-interactive').screenshot({path:'qa-output/desktop.png'});
+  await sleep(2000);assert.equal(await d.frame.locator('.tr-zoom-value').textContent(),'220%');
+  await page.screenshot({path:'qa-output/desktop-viewport.png'});
+  phase='resize before interaction';
+  await page.setViewportSize({width:1100,height:850});
+  let resizeZoom='';for(let i=0;i<60;i++){await sleep(250);resizeZoom=await d.frame.locator('.tr-zoom-value').textContent();if(resizeZoom==='220%'&&i>=8)break;}
+  assert.equal(resizeZoom,'220%','automatic resize preserves the minimum number-label zoom');
   phase='threshold boundary';
   await d.frame.locator('.tr-play').click();await sleep(800);
   await wheelTo(d.frame,219/220.01);await sleep(1600);
@@ -55,14 +60,27 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   await wheelTo(d.frame,220.01/219);
   for(let i=0;i<35&&!(await badges(d.frame));i++)await sleep(200);
   const at=await badges(d.frame);assert.ok(at>0,'route-number badges return at threshold');
+  phase='Collab V2 after Yolda';
+  await page.locator('#research [data-interactive="collabs-v2"]').click();
+  const v2=page.frameLocator('#research-interactive iframe');
+  assert.equal(await page.locator('#research-interactive iframe').getAttribute('sandbox'),null);
+  await v2.locator('#map').waitFor({state:'attached',timeout:90000});
+  let summary='';for(let i=0;i<150;i++){
+    summary=(await v2.locator('#selection-summary').textContent()).trim();
+    if(/\d/.test(summary)&&/канал/i.test(summary))break;await sleep(400);
+  }
+  assert.match(summary,/\d.*канал/i,'V2 graph data loaded with actual channel count');
+  const mapBox=await v2.locator('#map').boundingBox();assert.ok(mapBox&&mapBox.width>100&&mapBox.height>100,'V2 canvas visible');
+  await page.screenshot({path:'qa-output/v2-viewport.png'});
   phase='mobile layout';
   const mobile=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,ignoreHTTPSErrors:true});await setup(mobile);
   const phone=await mobile.newPage(),m=await openAndCompare(phone);
   for(let i=0;i<45&&!(await badges(m.frame));i++)await sleep(200);
   assert.ok(await badges(m.frame)>0,'route numbers rendered on mobile');
-  await phone.locator('#research-interactive').screenshot({path:'qa-output/mobile.png'});
+  await sleep(2000);assert.equal(await m.frame.locator('.tr-zoom-value').textContent(),'220%');
+  await phone.screenshot({path:'qa-output/mobile-viewport.png'});
   await mobile.close();assert.deepEqual(errors,[]);
-  console.log(JSON.stringify({pass:true,desktopHeight:d.rect.height,dashboardHeight:d.first.height,mobileHeight:m.rect.height,mobileDashboardHeight:m.first.height,initialZoom:d.zoom,belowZoom,belowBadges:below,atThresholdBadges:at,isolated:true,reviewProductionWritesBlocked:true}));
+  console.log(JSON.stringify({pass:true,desktopHeight:d.rect.height,dashboardHeight:d.first.height,mobileHeight:m.rect.height,mobileDashboardHeight:m.first.height,initialZoom:d.zoom,belowZoom,belowBadges:below,atThresholdBadges:at,collabV2Loaded:true,isolated:true,reviewProductionWritesBlocked:true}));
  }catch(error){console.error(JSON.stringify({pass:false,phase,message:error.message.slice(0,900),pageErrors:errors.slice(-4)}));process.exitCode=1;}
  finally{await context.close();await browser.close();}
 })();
