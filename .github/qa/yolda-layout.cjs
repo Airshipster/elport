@@ -66,7 +66,7 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   });
   const v2Card=page.locator('#research a[data-interactive="collabs-v2"]').first();
   const cardInfo=await v2Card.evaluate(e=>({loopCopy:!!e.closest('[data-loop-copy]'),parent:e.parentElement?.className,expanded:e.getAttribute('aria-expanded')}));
-  await v2Card.click();await sleep(500);
+  await v2Card.scrollIntoViewIfNeeded();await sleep(1000);await v2Card.click();await sleep(500);
   console.log(JSON.stringify({v2Click:cardInfo,events:await page.evaluate(()=>window.__qaClicks),mode:await page.locator('#research-interactive').getAttribute('data-interactive')}));
   await page.screenshot({path:'qa-output/after-v2-click.png'});
   const v2=page.frameLocator('#research-interactive iframe');
