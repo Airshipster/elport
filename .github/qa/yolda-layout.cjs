@@ -61,7 +61,14 @@ async function badges(frame){return frame.locator('#player').evaluate(()=>window
   for(let i=0;i<35&&!(await badges(d.frame));i++)await sleep(200);
   const at=await badges(d.frame);assert.ok(at>0,'route-number badges return at threshold');
   phase='Collab V2 after Yolda';
-  await page.locator('#research [data-interactive="collabs-v2"]').click();
+  await page.evaluate(()=>{
+   window.__qaClicks=[];for(const [name,node] of [['document',document],['research',document.querySelector('#research')]])for(const capture of [true,false])node.addEventListener('click',e=>window.__qaClicks.push({name,capture,target:e.target.closest?.('a[data-interactive]')?.dataset.interactive||e.target.tagName,prevented:e.defaultPrevented}),capture);
+  });
+  const v2Card=page.locator('#research a[data-interactive="collabs-v2"]').first();
+  const cardInfo=await v2Card.evaluate(e=>({loopCopy:!!e.closest('[data-loop-copy]'),parent:e.parentElement?.className,expanded:e.getAttribute('aria-expanded')}));
+  await v2Card.click();await sleep(500);
+  console.log(JSON.stringify({v2Click:cardInfo,events:await page.evaluate(()=>window.__qaClicks),mode:await page.locator('#research-interactive').getAttribute('data-interactive')}));
+  await page.screenshot({path:'qa-output/after-v2-click.png'});
   const v2=page.frameLocator('#research-interactive iframe');
   assert.equal(await page.locator('#research-interactive iframe').getAttribute('sandbox'),null);
   await v2.locator('#map').waitFor({state:'attached',timeout:90000});
